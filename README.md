@@ -1,0 +1,1 @@
+# All-Mighty-Quality
