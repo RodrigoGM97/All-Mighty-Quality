@@ -1,21 +1,17 @@
 import React from 'react';
 import {Navbar, Button} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { browserHistory } from "react-router";
+import Logo from '../Images/LogoTec.png';
 
 
  class NavBar extends React.Component {
-
-    /*goHome(){
-        browserHistory.push("../Home-page/Home")
-    }*/
 
     render() {
 
         return (
             <div>
                 <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="#home">RPMA</Navbar.Brand>
+                <img src={Logo} width="50" height="50" />
+                <Navbar.Brand href="#home">International Exchange Portal</Navbar.Brand>
                     
                 </Navbar>
              </div>

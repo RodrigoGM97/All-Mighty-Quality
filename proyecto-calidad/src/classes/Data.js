@@ -1,13 +1,7 @@
 class Data {
-    fileArr = [];
-    userArr = [];
-    countArr = [];
-
-    constructor(fileArr, userArr, countArr){
-        this.fileArr = fileArr;
-        this.userArr = userArr;
-        this.countArr = countArr;
-
+    studentArr = [];
+    constructor(studentArr){
+        this.studentArr = studentArr;
     }
 }
 

@@ -1,29 +1,19 @@
 {
-  "name": "proyecto",
-  "jest": {
-    "collectCoverageFrom": [
-      "./*/.{js,jsx}"
-    ]
-  },
+  "name": "proyecto-arquitectura",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.4.2",
     "@material-ui/icons": "^4.4.1",
-    "@testing-library/jest-dom": "^4.2.3",
-    "@testing-library/react": "^9.3.2",
+    "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
-    "popoto": "^2.0.18",
-    "react": "^16.9.0",
+    "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
-    "react-dom": "^16.9.0",
-    "react-dropzone": "^10.1.9",
+    "react-dom": "^16.11.0",
     "react-redux": "^7.1.1",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.1",
-    "react-test-renderer": "^16.11.0",
-    "react-vis": "^1.11.7",
     "redux": "^4.0.4",
     "save": "^2.4.0"
   },
@@ -47,8 +37,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "nyc": "^14.1.1"
   }
 }
