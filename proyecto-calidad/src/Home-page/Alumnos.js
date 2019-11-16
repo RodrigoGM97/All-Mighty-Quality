@@ -35,7 +35,8 @@ class tablaAlumnos extends React.Component {
     {
       ids.push(document.getElementById("students").rows[i].cells[0].innerHTML); 
       classes.push(document.getElementById("students").rows[i].cells[3].innerHTML);
-      temp = {"academic": document.getElementById("students").rows[i].cells[4].value};
+      temp = {"academic": document.getElementById("grade1"+ids[i-1]).value, "team": document.getElementById("grade2"+ids[i-1]).value, "communication": document.getElementById("grade3"+ids[i-1]).value};
+      grades.push(temp);
     }
     console.log(ids);
     console.log(classes);
