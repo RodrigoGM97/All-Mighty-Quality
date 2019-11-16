@@ -26,17 +26,21 @@ class tablaAlumnos extends React.Component {
 
 
   updateGrade() {
-    var ids = []
-    var classes = []
-    var grades = []
+    var ids = [];
+    var classes = [];
+    var grades = [];
+    var temp;
     var size = document.getElementById("students").rows.length;
     for(var i =1; i<size; i++)
     {
       ids.push(document.getElementById("students").rows[i].cells[0].innerHTML); 
       classes.push(document.getElementById("students").rows[i].cells[3].innerHTML);
+      temp = {"academic": document.getElementById("students").rows[i].cells[4].value};
+      grades.push(temp);
     }
     console.log(ids);
     console.log(classes);
+    console.log(grades);
   }
 
   render() {
