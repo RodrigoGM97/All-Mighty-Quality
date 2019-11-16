@@ -25,15 +25,18 @@ class tablaAlumnos extends React.Component {
   } 
 
 
-  updateGrade(number, clase, academic, team, com) {
-    var payload = [];
-    payload[0] = number;
-    payload[1] = clase;;
-    payload[2] = academic;
-    payload[3] = team;
-    payload[4] = com;
-    this.props.Grades(payload);
-    console.log(payload);
+  updateGrade() {
+    var ids = []
+    var classes = []
+    var grades = []
+    var size = document.getElementById("students").rows.length;
+    for(var i =1; i<size; i++)
+    {
+      ids.push(document.getElementById("students").rows[i].cells[0].innerHTML); 
+      classes.push(document.getElementById("students").rows[i].cells[3].innerHTML);
+    }
+    console.log(ids);
+    console.log(classes);
   }
 
   render() {
@@ -44,7 +47,7 @@ class tablaAlumnos extends React.Component {
 
     return (
       <Paper >
-        <Table>
+        <Table id="students">
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
@@ -73,13 +76,11 @@ class tablaAlumnos extends React.Component {
                 <TableCell >
                   <input type="number" id={"grade3" + alumnos.id} min="0" max="100"/>
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  <Button className="btn btn-primary" variant="contained" onClick={() => this.updateGrade(alumnos.id, alumnos.enrolledClasses[0].class, document.getElementById("grade1" + alumnos.id).value, document.getElementById("grade2" + alumnos.id).value, document.getElementById("grade3" + alumnos.id).value)}>Submit</Button>
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        <Button className="btn btn-primary" variant="contained" onClick={() => this.updateGrade()}>Submit</Button>
       </Paper>
     );
   }
