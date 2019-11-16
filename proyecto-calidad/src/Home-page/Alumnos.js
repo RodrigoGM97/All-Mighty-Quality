@@ -26,6 +26,7 @@ class tablaAlumnos extends React.Component {
 
 
   updateGrade() {
+    var payload = [];
     var ids = [];
     var classes = [];
     var grades = [];
@@ -38,9 +39,11 @@ class tablaAlumnos extends React.Component {
       temp = {"academic": document.getElementById("grade1"+ids[i-1]).value, "team": document.getElementById("grade2"+ids[i-1]).value, "communication": document.getElementById("grade3"+ids[i-1]).value};
       grades.push(temp);
     }
-    console.log(ids);
-    console.log(classes);
-    console.log(grades);
+    payload[0] = ids;
+    payload[1] = classes;
+    payload[2] = grades;
+    this.props.Grades(payload);
+    console.log(payload);
   }
 
   render() {
