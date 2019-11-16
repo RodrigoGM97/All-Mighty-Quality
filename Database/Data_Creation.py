@@ -25,7 +25,9 @@ f = open('Teacher_Inserts.txt', 'w')
 for i in range(0,20):
     r = randint(111111,999999)
     ID = "L01" + str(r)
-    insert_str = teacher_str + "'" + str(ID) + "','" + faker.first_name() +  "','" + faker.last_name() + " " + faker.last_name() + "','" + str(ID) + "@tec.mx','" + faker.word() + "');\n"
+    name = faker.first_name()
+    lastname = faker.last_name()
+    insert_str = teacher_str + "'" + str(ID) + "','" + name +  "','" + lastname + " " + faker.last_name() + "','" + name + '.' + lastname + "@tec.mx','" + faker.word() + "');\n"
     f.write(insert_str) 
     
 f.close()
