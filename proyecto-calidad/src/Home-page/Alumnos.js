@@ -7,7 +7,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Grades from '../Actions/Grades';
 
 /*const root = {
@@ -25,11 +24,14 @@ class tablaAlumnos extends React.Component {
     super(props);
   } 
 
-  updateGrade(number, clase, grade) {
+
+  updateGrade(number, clase, academic, team, com) {
     var payload = [];
     payload[0] = number;
     payload[1] = clase;;
-    payload[2] = grade;
+    payload[2] = academic;
+    payload[3] = team;
+    payload[4] = com;
     this.props.Grades(payload);
     console.log(payload);
   }
@@ -38,7 +40,6 @@ class tablaAlumnos extends React.Component {
     
     this.alumnos = this.props.state.studentArr;
     //this.getGraph();
-    console.log(this.props.state.studentArr[0].enrolledClasses[0].class);
     
 
     return (
@@ -50,7 +51,9 @@ class tablaAlumnos extends React.Component {
               <TableCell >Name</TableCell>
               <TableCell >Surname</TableCell>
               <TableCell >Class</TableCell>
-              <TableCell >Grade</TableCell>
+              <TableCell >Academic</TableCell>
+              <TableCell >Team Work</TableCell>
+              <TableCell >Communication Skills</TableCell>
               <TableCell > </TableCell>
             </TableRow>
           </TableHead>
@@ -62,10 +65,16 @@ class tablaAlumnos extends React.Component {
                 <TableCell >{alumnos.surname}</TableCell>
                 <TableCell >{alumnos.enrolledClasses[0].class}</TableCell>
                 <TableCell >
-                  <input type="text" id={"grade" + alumnos.id} pattern="[0-9]*"/>
+                  <input type="number" id={"grade1" + alumnos.id} min="0" max="100"/>
+                </TableCell>
+                <TableCell >
+                  <input type="number" id={"grade2" + alumnos.id} min="0" max="100"/>
+                </TableCell>
+                <TableCell >
+                  <input type="number" id={"grade3" + alumnos.id} min="0" max="100"/>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <Button className="btn btn-primary" variant="contained" onClick={() => this.updateGrade(alumnos.id, alumnos.enrolledClasses[0].class, document.getElementById("grade" + alumnos.id).value)}>Submit</Button>
+                  <Button className="btn btn-primary" variant="contained" onClick={() => this.updateGrade(alumnos.id, alumnos.enrolledClasses[0].class, document.getElementById("grade1" + alumnos.id).value, document.getElementById("grade2" + alumnos.id).value, document.getElementById("grade3" + alumnos.id).value)}>Submit</Button>
                 </TableCell>
               </TableRow>
             ))}
