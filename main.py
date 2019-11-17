@@ -31,7 +31,14 @@ def query():
 
 @app.route('/login', methods=['GET', 'POST']) # HTTP request methods namely "GET" or "POST"
 def login():
-    return jsonify("Login")
+    user = request.args.get('user')
+    password = request.args.get('pass')
+    query = "WITH TT_LOGIN_DATABASE AS( select student_id as ID, 'Student' as Role, Pass as Password from students union select teacher_id as ID, 'Teacher' as Role, Pass as Password from  teachers) select case when EXISTS(SELECT ROLE from TT_LOGIN_DATABASE WHERE ID = '"+user+"' and Password = '"+password+"' group by ID, Role ) THEN 'OK' ELSE 'Incorrect Login' end as Status;"
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    json_response = jsonify(rows[0][0])
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    return json_response
 
 @app.route('/GET-allStudents', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def getAllStudents():
