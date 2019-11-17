@@ -38,9 +38,15 @@ class Login extends React.Component {
         this.professor = true;
       if(response.data === "Student")
         this.student = true;
+      
+      if(this.professor)
+        this.props.history.push('/Home');
+      else if (this.student)
+        this.props.history.push('/Home');
+      else {
+        alert("Incorrect Data");
+      }
     });
-    if(this.professor || this.student)
-      this.props.history.push('/Home');
   }
 
   render () {

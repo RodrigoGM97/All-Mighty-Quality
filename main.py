@@ -17,18 +17,6 @@ def connection():
     print(connection)
     return response
 
-@app.route("/query")
-def query():
-    cursor.execute("SELECT * FROM Test")
-    users = cursor.fetchall()
-    json_response = []
-    for row in users:
-        content = {'name': row[0], 'surname': row[1]}
-        json_response.append(content)
-    json_response = jsonify(json_response)
-    json_response.headers.add('Access-Control-Allow-Origin', '*')
-    return json_response
-
 @app.route('/login', methods=['GET', 'POST']) # HTTP request methods namely "GET" or "POST"
 def login():
     user = request.args.get('user')
@@ -66,11 +54,13 @@ def getAllTeachers():
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
 
-@app.route ( '/multiply', methods=['GET'])
-def get_table():
-    username = request.args.get('username')
-    print (username)
-    json_response = jsonify(username)
+@app.route ( '/getClassesTeacher', methods=['GET'])
+def getClassesTeacher():
+    currentTeacher = request.args.get('username')
+    query = "select student.student_id as student_id, student.names as Name, student.lastnames as 'Last Name', cl.class_name as 'Class Name', student_class.Academic_grade as 'Academic', student_class.TeamWork_grade as 'Team Work', student_class.Communication_grade as 'Communication Skills' from students student join student_has_class student_class on (student.student_id = student_class.student_id) join class cl on (cl.class_id = student_class.class_id) join TEACHER_GIVES_CLASS TEACHER_CLASS ON (CL.CLASS_ID = TEACHER_CLASS.CLASS_ID) JOIN TEACHERS T ON (T.TEACHER_ID = TEACHER_CLASS.TEACHER_ID) Where T.teacher_id = ID;"
+    json_response = []
+    classes = cursor.execute(query)
+    json_response = jsonify(classes)
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
 
