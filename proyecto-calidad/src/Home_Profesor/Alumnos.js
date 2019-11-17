@@ -13,7 +13,13 @@ import Alumno from '../classes/Alumno';
 class tablaAlumnos extends React.Component {
   constructor(props){
     super(props);
-  } 
+  }
+  
+  getData(teacher_id) {
+    axios.get("http://localhost:5000/getClassesTeacher?username="+teacher_id).then(response => {
+
+    })
+  }
 
   alumnos = [
     new Alumno("A01024595", "Rodrigo", "Garcia", "mail",[{"class":"Arquitectura", "grade":"10"}, {"class":"Programación", "grade":"7"}]), 
