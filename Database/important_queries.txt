@@ -1,0 +1,10 @@
+Select 
+    (student.Lastnames + ', ' + student.Names) as Student_Full_Name,
+    class.Class_name,
+    ISNULL(student_class.grade, 0) AS GRADE,
+    (teacher.Lastnames + ', ' + teacher.Names) as Teacher_Full_Name
+from 
+    STUDENTS student JOIN STUDENT_HAS_CLASS student_class on (student.Student_id = student_class.student_id)
+    JOIN TEACHER_GIVES_CLASS teacher_class on(teacher_class.Class_id = student_class.class_id)
+    JOIN TEACHERS teacher on (teacher.teacher_id = teacher_class.teacher_id)
+    JOIN CLASS class on (student_class.Class_id = class.class_id)

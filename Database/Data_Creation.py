@@ -16,6 +16,7 @@ stdnt_str = 'INSERT INTO STUDENTS (STUDENT_ID, NAMES, LASTNAMES, MAIL, PASS) VAL
 teacher_str = 'INSERT INTO TEACHERS (TEACHER_ID, NAMES, LASTNAMES, MAIL, PASS) VALUES ('
 class_str = 'INSERT INTO CLASS(CLASS_ID, CLASS_NAME) VALUES ('
 stdnt_class_str = 'INSERT INTO STUDENT_HAS_CLASS(STUDENT_ID, CLASS_ID) VALUES ('
+teachers_class_str = 'INSERT INTO TEACHER_GIVES_CLASS(TEACHER_ID, CLASS_ID) VALUES ('
 
 Letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 Topics = ['Math', 'Biology', 'Ethics', 'Computing', 'Entrepreneurship', 'Leadership']
@@ -74,6 +75,16 @@ for student_id in cleaned_students:
     for i in range(0,n_class):
         class_id = randint(0,len(cleaned_classes)-1)
         insert_str = stdnt_class_str + "'" + student_id + "','" + cleaned_classes[class_id] +  "');\n"
+        f.write(insert_str) 
+    
+f.close()
+
+f = open('teacher_Class_Inserts.txt', 'w')
+for teacher_id in cleaned_teachers:
+    n_class = randint(1,2)
+    for i in range(0,n_class):
+        class_id = randint(0,len(cleaned_classes)-1)
+        insert_str = teachers_class_str + "'" + teacher_id + "','" + cleaned_classes[class_id] +  "');\n"
         f.write(insert_str) 
     
 f.close()
