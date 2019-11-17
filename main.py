@@ -38,7 +38,7 @@ def show():
     print(jsonify(cursor.fetchall()))
     json_response = []
     for row in tables:
-        content = {'id':row[0],'name':row[1],'lastNames':row[2],'password':row[3]}
+        content = {'id':row[0],'name':row[1],'lastNames':row[2],'mail':row[3], 'password':row[4]}
         json_response.append(content)
     json_response = jsonify(json_response)
     json_response.headers.add('Access-Control-Allow-Origin', '*')

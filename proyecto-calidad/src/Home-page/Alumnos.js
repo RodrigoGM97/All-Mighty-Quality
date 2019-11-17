@@ -47,7 +47,6 @@ class tablaAlumnos extends React.Component {
   }
 
   render() {
-    
     this.alumnos = this.props.state.studentArr;
     //this.getGraph();
     

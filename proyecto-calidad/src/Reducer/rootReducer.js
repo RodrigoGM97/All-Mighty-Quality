@@ -1,40 +1,47 @@
 import Data from '../classes/Data';
 import Alumno from '../classes/Alumno';
+import axios from 'axios';
+
+
+axios.get('http://localhost:5000/GET-allStudents').then(response => getAlumnos(response));
 
 var alumnos = [
-    new Alumno("A01024595", "Rodrigo", "Garcia", [{"class":"Arquitectura", "grade":"10"}, {"class":"Programación", "grade":"7"}]), 
-    new Alumno("A01023607", "Alberto", "Pascal", [{"class":"Arquitectura", "grade":"9"}, {"class":"Programación", "grade":"8"}])];
+    new Alumno("A01024595", "Rodrigo", "Garcia", "mail",[{"class":"Arquitectura", "grade":"10"}, {"class":"Programación", "grade":"7"}]), 
+    new Alumno("A01023607", "Alberto", "Pascal", "mail",[{"class":"Arquitectura", "grade":"9"}, {"class":"Programación", "grade":"8"}])];
 var data = new Data(alumnos);
+
+function getAlumnos(alumnos) {
+    alumnos = alumnos.data;
+    var alumnosArr = [];
+    for(var i=0;i<alumnos.length;i++) {
+        var alumno = {
+            'id':alumnos[0].id,
+            'name':alumnos[1].name,
+            'lastNames':alumnos[2].lastNames,
+            'mail':alumnos[3].mail,
+            'password':alumnos[4].password
+        }
+        var clases = [{"class":"Arquitectura", "grade":"10"}, {"class":"Programación", "grade":"7"}];
+        alumnosArr.push(new Alumno(alumno.id, alumno.name, alumno.lastNames, alumno.mail, clases, alumno.password));
+    }
+    var writeData = new Data(alumnosArr);
+    data = writeData;
+}
+
+
 
 function rootReducer(state = data, {type, payload}) {
     switch(type) {
         case 'Grades':
-            console.log("Actualizando calificación");
-            console.log(payload);
-            for(var i=0; i<state.studentArr.length; i++)
-            {
-                for(var j=0; j< state.studentArr[i].enrolledClasses.length; j++)
-                {
-                    if(state.studentArr[i].id.localeCompare(payload[0]) === 0 && state.studentArr[i].enrolledClasses[j].class.localeCompare(payload[1] === 0))
-                    {
-                        state.studentArr[i].enrolledClasses[j].grade = payload[2];
-                        break;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
             
-            //state.studentArr[0].enrolledClasses[0].grade = payload;
-            //console.log(state.studentArr[0].enrolledClasses[0].grade);
             console.log(state.studentArr);
             return state;
         default:
-            console.log('entró al default');
+            
             return state;
     }
 }
+
+
 
 export default rootReducer;
