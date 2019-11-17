@@ -7,6 +7,10 @@ class Data {
         this.currentUser = user;
         this.type_user = type;
     }
+
+    setClasses(json_response) {
+        console.log("setClasses: %j",json_response);
+    }
 }
 
 export default Data;

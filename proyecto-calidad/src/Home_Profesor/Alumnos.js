@@ -9,6 +9,8 @@ import {Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Grades from '../Actions/Grades';
 import Alumno from '../classes/Alumno';
+import setClasses from '../Actions/setClasses';
+import axios from 'axios';
 
 class tablaAlumnos extends React.Component {
   constructor(props){
@@ -17,7 +19,7 @@ class tablaAlumnos extends React.Component {
   
   getData(teacher_id) {
     axios.get("http://localhost:5000/getClassesTeacher?username="+teacher_id).then(response => {
-
+      this.props.setClasses(response);
     })
   }
 
@@ -48,7 +50,7 @@ class tablaAlumnos extends React.Component {
 
   render() {
     //this.alumnos = this.props.state.studentArr;
-    console.log(this.alumnos);
+    this.getData(this.props.state.currentUser);
     //this.getGraph();
     
 
@@ -101,7 +103,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  Grades
+  Grades,
+  setClasses
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(tablaAlumnos);

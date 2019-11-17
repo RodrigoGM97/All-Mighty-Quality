@@ -4,7 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import setCurrentUser from '../Actions/setCurrentUser';
+
 import axios from 'axios';
 
 
@@ -39,10 +40,16 @@ class Login extends React.Component {
       if(response.data === "Student")
         this.student = true;
       
-      if(this.professor)
+      if(this.professor) {
+        var payload = [user, "Profesor"];
+        this.props.setCurrentUser(payload);
         this.props.history.push('/Home-Profesor');
-      else if (this.student)
+      }  
+      else if (this.student) {
+        var payload = [user, "Alumno"];
+        this.props.setCurrentUser(payload);
         this.props.history.push('/Home-Alumno');
+      } 
       else {
         alert("Incorrect Data");
       }
@@ -74,7 +81,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  
+  setCurrentUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
