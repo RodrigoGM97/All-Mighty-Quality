@@ -1,6 +1,8 @@
 import pyodbc
 import flask
 from flask import jsonify
+from flask import request
+
 
 app = flask.Flask("__main__")
 
@@ -32,7 +34,7 @@ def login():
     return jsonify("Login")
 
 @app.route('/GET-allStudents', methods=['GET']) # HTTP request methods namely "GET" or "POST"
-def show():
+def getAllStudents():
     cursor.execute("SELECT * FROM STUDENTS")
     tables = cursor.fetchall()
     print(jsonify(cursor.fetchall()))
@@ -41,6 +43,27 @@ def show():
         content = {'id':row[0],'name':row[1],'lastNames':row[2],'mail':row[3], 'password':row[4]}
         json_response.append(content)
     json_response = jsonify(json_response)
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    return json_response
+
+@app.route('/GET-allTeachers', methods=['GET']) # HTTP request methods namely "GET" or "POST"
+def getAllTeachers():
+    cursor.execute("SELECT * FROM Teachers")
+    tables = cursor.fetchall()
+    print(jsonify(cursor.fetchall()))
+    json_response = []
+    for row in tables:
+        content = {'id':row[0],'name':row[1],'lastNames':row[2],'mail':row[4], 'password':row[3]}
+        json_response.append(content)
+    json_response = jsonify(json_response)
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    return json_response
+
+@app.route ( '/multiply', methods=['GET'])
+def get_table():
+    username = request.args.get('username')
+    print (username)
+    json_response = jsonify(username)
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
 

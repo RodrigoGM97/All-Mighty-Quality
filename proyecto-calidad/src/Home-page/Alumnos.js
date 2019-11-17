@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import {Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Grades from '../Actions/Grades';
+import Alumno from '../classes/Alumno';
 
 /*const root = {
   width: '100%',
@@ -24,6 +25,9 @@ class tablaAlumnos extends React.Component {
     super(props);
   } 
 
+  alumnos = [
+    new Alumno("A01024595", "Rodrigo", "Garcia", "mail",[{"class":"Arquitectura", "grade":"10"}, {"class":"Programación", "grade":"7"}]), 
+    new Alumno("A01023607", "Alberto", "Pascal", "mail",[{"class":"Arquitectura", "grade":"9"}, {"class":"Programación", "grade":"8"}])];
 
   updateGrade() {
     var payload = [];
@@ -47,7 +51,8 @@ class tablaAlumnos extends React.Component {
   }
 
   render() {
-    this.alumnos = this.props.state.studentArr;
+    //this.alumnos = this.props.state.studentArr;
+    console.log(this.alumnos);
     //this.getGraph();
     
 

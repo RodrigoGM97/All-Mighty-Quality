@@ -6,6 +6,7 @@ class Alumno {
         this.surname = surname;
         this.email = email;
         this.enrolledClasses = enrolledClasses;
+        this.password = password;
     }
 }
 

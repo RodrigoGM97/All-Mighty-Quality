@@ -1,7 +1,11 @@
 class Data {
-    studentArr = [];
-    constructor(studentArr){
-        this.studentArr = studentArr;
+    currentUser = null;
+    type_user = null;
+    classesArr = [];
+
+    setCurrentUser (user, type) {
+        this.currentUser = user;
+        this.type_user = type;
     }
 }
 
