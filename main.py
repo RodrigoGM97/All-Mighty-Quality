@@ -33,7 +33,7 @@ def query():
 def login():
     user = request.args.get('user')
     password = request.args.get('pass')
-    query = "WITH TT_LOGIN_DATABASE AS( select student_id as ID, 'Student' as Role, Pass as Password from students union select teacher_id as ID, 'Teacher' as Role, Pass as Password from  teachers) select case when EXISTS(SELECT ROLE from TT_LOGIN_DATABASE WHERE ID = '"+user+"' and Password = '"+password+"' group by ID, Role ) THEN 'OK' ELSE 'Incorrect Login' end as Status;"
+    query = "select dbo.VALIDATE_LOGIN('" + str(user) + "','" + str(password) + "');"
     cursor.execute(query)
     rows = cursor.fetchall()
     json_response = jsonify(rows[0][0])
