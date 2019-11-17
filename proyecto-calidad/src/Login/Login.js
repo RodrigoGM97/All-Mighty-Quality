@@ -40,9 +40,9 @@ class Login extends React.Component {
         this.student = true;
       
       if(this.professor)
-        this.props.history.push('/Home');
+        this.props.history.push('/Home-Profesor');
       else if (this.student)
-        this.props.history.push('/Home');
+        this.props.history.push('/Home-Alumno');
       else {
         alert("Incorrect Data");
       }

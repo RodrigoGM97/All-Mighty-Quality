@@ -10,16 +10,6 @@ import { connect } from 'react-redux';
 import Grades from '../Actions/Grades';
 import Alumno from '../classes/Alumno';
 
-/*const root = {
-  width: '100%',
-  marginTop: theme.spacing(3),
-  overflowX: 'auto',
-};
-
-const table = {
-  minWidth: 650,
-};*/
-
 class tablaAlumnos extends React.Component {
   constructor(props){
     super(props);
