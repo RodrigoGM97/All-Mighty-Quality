@@ -1,10 +1,88 @@
 Select 
     (student.Lastnames + ', ' + student.Names) as Student_Full_Name,
     class.Class_name,
-    ISNULL(student_class.grade, 0) AS GRADE,
+    student_class.grade,
     (teacher.Lastnames + ', ' + teacher.Names) as Teacher_Full_Name
 from 
     STUDENTS student JOIN STUDENT_HAS_CLASS student_class on (student.Student_id = student_class.student_id)
     JOIN TEACHER_GIVES_CLASS teacher_class on(teacher_class.Class_id = student_class.class_id)
     JOIN TEACHERS teacher on (teacher.teacher_id = teacher_class.teacher_id)
     JOIN CLASS class on (student_class.Class_id = class.class_id)
+
+
+-- Login query:
+
+WITH TT_LOGIN_DATABASE AS(
+select
+    student_id as ID,
+    'Student' as Role,
+    Pass as Password
+from students
+union
+select
+    teacher_id as ID,
+    'Teacher' as Role,
+    Pass as Password
+from  teachers)
+select
+case when EXISTS(SELECT 
+                    ROLE
+                from TT_LOGIN_DATABASE
+                WHERE ID = 'A01120369' and Password = 'nothing' group by ID, Role
+                ) THEN 'OK'
+            ELSE
+            'Incorrect Login' end as Status
+        ;
+
+--PROCEDURE LOGIN
+
+CREATE FUNCTION VALIDATE_LOGIN(
+@USERNAME_R VARCHAR(100),
+@PASSWORD_R VARCHAR(100))
+RETURNS VARCHAR(100)
+AS
+BEGIN
+    DECLARE @V_LOGIN VARCHAR(100);
+    DECLARE @V_ROLE VARCHAR(100);
+
+    WITH TT_LOGIN_DATABASE AS(
+select
+    student_id as ID,
+    'Student' as Role,
+    Pass as Password
+from students
+union
+select
+    teacher_id as ID,
+    'Teacher' as Role,
+    Pass as Password
+from  teachers)
+select
+@V_LOGIN = (case when EXISTS(SELECT 
+                    ROLE
+                from TT_LOGIN_DATABASE
+                WHERE ID = @USERNAME_R and Password = @PASSWORD_R group by ID, Role
+                ) THEN 'OK'
+            ELSE
+            'Incorrect Login' end)
+        ;
+    IF @V_LOGIN = 'OK'
+         WITH TT_LOGIN_DATABASE AS(
+            select
+                student_id as ID,
+                'Student' as Role,
+                Pass as Password
+            from students
+            union
+            select
+                teacher_id as ID,
+                'Teacher' as Role,
+                Pass as Password
+            from  teachers) 
+        SELECT 
+            @V_ROLE=ROLE
+            from TT_LOGIN_DATABASE
+        WHERE ID = @USERNAME_R and Password = @PASSWORD_R group by ID, Role
+    ELSE SELECT @V_ROLE='INCORRECT LOGIN';    
+    RETURN @V_ROLE;
+END
