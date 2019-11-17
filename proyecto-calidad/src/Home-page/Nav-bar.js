@@ -1,9 +1,7 @@
 import React from 'react';
-import {Navbar, ButtonGroup, Dropdown, DropdownButton, Button} from 'react-bootstrap';
+import {Navbar, ButtonGroup, Dropdown, DropdownButton} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Logo from '../Images/LogoTec.png';
-import axios from 'axios';
-
 
  class NavBar extends React.Component {
     render() {

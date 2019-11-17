@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navbar, Button} from 'react-bootstrap';
+import {Navbar} from 'react-bootstrap';
 import Logo from '../Images/LogoTec.png';
 
 
