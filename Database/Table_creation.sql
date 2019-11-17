@@ -25,18 +25,21 @@ CREATE TABLE CLASS
     Class_name varchar(100),
     PRIMARY KEY(Class_ID)
 )
+
+
 CREATE TABLE STUDENT_HAS_CLASS
 (
-    
     Class_id varchar(100),
-    student_id varchar(100)
-    
-
+    student_id varchar(32),
+    grade float DEFAULT NULL,
+    constraint STUDENT_ID_CLASS FOREIGN KEY (student_id) REFERENCES STUDENTS(Student_id),
+    constraint ClASS_ID_STUDENT FOREIGN KEY (Class_id) REFERENCES CLASS(class_id)
 );
-CREATE TABLE TEACHER_GIVES_CLASS
+CREATE TABLE STUDENT_HAS_CLASS
 (
     teacher_id varchar(32),
     class_id varchar(100)
-)
-
+    constraint TEACHER_ID_CLASS FOREIGN KEY (teacher_id) REFERENCES TEACHERS(teacher_id),
+    constraint ClASS_ID_TEACHER FOREIGN KEY (Class_id) REFERENCES CLASS(class_id)
+);
 END;
