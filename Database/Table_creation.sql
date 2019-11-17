@@ -31,7 +31,9 @@ CREATE TABLE STUDENT_HAS_CLASS
 (
     Class_id varchar(100),
     student_id varchar(32),
-    grade float DEFAULT NULL,
+    Academic_grade float DEFAULT NULL,
+    TeamWork_grade float DEFAULT NULL,
+    Communication_grade float DEFAULT NULL,
     constraint STUDENT_ID_CLASS FOREIGN KEY (student_id) REFERENCES STUDENTS(Student_id),
     constraint ClASS_ID_STUDENT FOREIGN KEY (Class_id) REFERENCES CLASS(class_id)
 );

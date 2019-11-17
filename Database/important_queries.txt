@@ -86,3 +86,20 @@ select
     ELSE SELECT @V_ROLE='INCORRECT LOGIN';    
     RETURN @V_ROLE;
 END
+
+--information by group display
+
+select 
+    student.student_id as student_id, 
+    student.names as Name,
+    student.lastnames as "Last Name",
+    cl.class_name as "Class Name", 
+    student_class.Academic_grade as "Academic", 
+    student_class.TeamWork_grade as "Team Work",
+    student_class.Communication_grade as "Communication Skills"
+
+from students student join student_has_class student_class on (student.student_id = student_class.student_id)
+join class cl on (cl.class_id = student_class.class_id)
+join TEACHER_GIVES_CLASS TEACHER_CLASS ON (CL.CLASS_ID = TEACHER_CLASS.CLASS_ID)
+JOIN TEACHERS T ON (T.TEACHER_ID = TEACHER_CLASS.TEACHER_ID)
+Where T.teacher_id = {replace for teacher id};
