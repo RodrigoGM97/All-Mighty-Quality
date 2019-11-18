@@ -78,7 +78,23 @@ def getClassesTeacher():
 @app.route ( '/getClassesofTeacher', methods=['GET'])
 def getClassesofTeacher():
     currentTeacher = request.args.get('teacher-id')
-    query = "select Class_name from [dbo].[TEACHER_GIVES_CLASS] teacher_class join [dbo].[CLASS] class on (class.class_id = teacher_class.class_id) where teacher_id = '"+currentTeacher+"';"
+    query = "select tc.class_id, cl.class_name from [dbo].[TEACHER_GIVES_CLASS] tc join CLASS cl on (cl.class_id = tc.class_id) where teacher_id = '"+currentTeacher+"';"
+    json_response = []
+    classes = cursor.execute(query)
+    for row in classes:
+        content = {
+            'classID': row[0],
+            'className':row[1],
+        }
+        json_response.append(content)
+    json_response = jsonify(json_response)
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    return json_response
+
+@app.route ( '/getStudentGrades', methods=['GET'])
+def getStudentGrades():
+    currentTeacher = request.args.get('student-id')
+    #query = "select student.student_id as student_id, student.names as Name, student.lastnames as "Last Name", cl.class_name as "Class Name", student_class.Academic_grade as "Academic", student_class.TeamWork_grade as "Team Work",student_class.Communication_grade as "Communication Skills" from students student join student_has_class student_class on (student.student_id = student_class.student_id) join class cl on (cl.class_id = student_class.class_id) join TEACHER_GIVES_CLASS TEACHER_CLASS ON (CL.CLASS_ID = TEACHER_CLASS.CLASS_ID) JOIN TEACHERS T ON (T.TEACHER_ID = TEACHER_CLASS.TEACHER_ID) Where T.teacher_id = 'replace for teacher id' and cl.Class_name = 'Replace for class name';"
     json_response = []
     classes = cursor.execute(query)
     for row in classes:

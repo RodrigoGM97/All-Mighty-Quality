@@ -11,7 +11,6 @@ function rootReducer(state = data, {type, payload}) {
             state.setCurrentUser(payload[0], payload[1]);
             return state;
         case 'setClasses':
-            console.log("%j", state);
             state.setClasses(payload);
             return state;
         default:

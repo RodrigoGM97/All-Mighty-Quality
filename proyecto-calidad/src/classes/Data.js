@@ -1,3 +1,5 @@
+import Clase from './Clase';
+
 class Data {
     currentUser = null;
     type_user = null;
@@ -10,10 +12,13 @@ class Data {
     }
 
     setClasses(json_response) {
+    
         for(var i=0;i<json_response.data.length;i++)
         {
-            this.classesArr.push(json_response.data[i].className);
+            var classes = new Clase(json_response.data[i].className, json_response.data[i].classID);
+            this.classesArr.push(classes);
         }
+        console.log("Arr: %j",this.classesArr);
         
     }
 }

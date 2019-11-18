@@ -3,6 +3,7 @@ import {Navbar, ButtonGroup, Dropdown, DropdownButton} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Logo from '../Images/LogoTec.png';
 import Clase from '../classes/Clase';
+import { connect } from 'react-redux';
 
  class NavBar extends React.Component {
     clases = [
@@ -16,6 +17,10 @@ import Clase from '../classes/Clase';
     }
 
     render() {
+        
+        this.clases = this.props.state.classesArr;
+        console.log(this.props.state);
+        
         return (
             <div>
                 <Navbar bg="light" expand="lg">
@@ -34,4 +39,14 @@ import Clase from '../classes/Clase';
 
  }
 
- export default NavBar;
+ const mapStateToProps = (state) => {
+    return {
+      state: state.rootReducer,
+    }
+  }
+  
+  const mapDispatchToProps = {
+    
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
