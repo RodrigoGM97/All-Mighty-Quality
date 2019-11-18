@@ -3,6 +3,7 @@ import Clase from './Clase';
 class Data {
     currentUser = null;
     type_user = null;
+    currentClass = "Group";
     classesArr = [];
     alumnosinClass = [];
 

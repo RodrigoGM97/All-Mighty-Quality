@@ -1,5 +1,4 @@
 import Data from '../classes/Data';
-import Alumno from '../classes/Alumno';
 
 
 var data = new Data();
@@ -12,6 +11,9 @@ function rootReducer(state = data, {type, payload}) {
             return state;
         case 'setClasses':
             state.setClasses(payload);
+            return state;
+        case 'setCurrentClass':
+            state.currentClass = payload;
             return state;
         default:
             

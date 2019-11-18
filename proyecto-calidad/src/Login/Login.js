@@ -22,18 +22,13 @@ const formElement= {
   marginBottom: '5%'
 };
 
-
 class Login extends React.Component {
   constructor(props){
     super(props);
   }
-
-  state = {
-    student: false,
-    professor: false,
-  }
-
+  
   verifyLogin(user, pass) {
+    var payload;
     axios.get("http://localhost:5000/login?user="+user+"&pass="+pass).then(response => {
       if(response.data === "Teacher")
         this.professor = true;
@@ -41,12 +36,12 @@ class Login extends React.Component {
         this.student = true;
       
       if(this.professor) {
-        var payload = [user, "Profesor"];
+        payload = [user, "Profesor"];
         this.props.setCurrentUser(payload);
         this.props.history.push('/Home-Profesor');
       }  
       else if (this.student) {
-        var payload = [user, "Alumno"];
+        payload = [user, "Alumno"];
         this.props.setCurrentUser(payload);
         this.props.history.push('/Home-Alumno');
       } 

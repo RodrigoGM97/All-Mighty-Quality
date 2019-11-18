@@ -9,7 +9,7 @@ import Logo from '../Images/LogoTec.png';
         return (
             <div>
                 <Navbar bg="light" expand="lg">
-                    <img src={Logo} width="50" height="50" />
+                    <img src={Logo} width="50" height="50" alt="notFound"/>
                     <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
                     <DropdownButton as={ButtonGroup} title="Groups" id="bg-vertical-dropdown-1" style = {{marginLeft: '15px'}}>
                         <Dropdown.Item eventKey="1">Architecture</Dropdown.Item>
