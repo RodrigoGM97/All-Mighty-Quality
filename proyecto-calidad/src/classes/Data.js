@@ -21,6 +21,23 @@ class Data {
         }
         console.log("Data: %j", this.classesArr);
     }
+
+    setAlumnosInClass(json_response) {
+        for(var i=0;i<json_response.data.length;i++)
+        {
+            var alumnosInClass = {
+                'ID':json_response.data[i].ID,
+                'Name':json_response.data[i].Name,
+                'LastName':json_response.data[i].LastName,
+                'className':json_response.data[i].className,
+                'Academic':json_response.data[i].Academic,
+                'teamWork':json_response.data[i].teamWork,
+                'commSkills':json_response.data[i].commSkills,
+            };
+            this.alumnosinClass.push(alumnosInClass);
+        }
+        console.log("alumnos.class: %j", this.alumnosinClass);
+    }
 }
 
 export default Data;

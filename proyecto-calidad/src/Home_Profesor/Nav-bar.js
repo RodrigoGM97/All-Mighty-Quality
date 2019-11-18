@@ -5,6 +5,7 @@ import Logo from '../Images/LogoTec.png';
 import { connect } from 'react-redux';
 import setClasses from '../Actions/setClasses';
 import setCurrentClass from '../Actions/setCurrentClass';
+import setAlumnosInClass from '../Actions/setAlumnosInClass';
 import axios from 'axios';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 
@@ -30,8 +31,10 @@ var called_state = 0;
     }
     getClass(classes){
         this.props.setCurrentClass(classes);
+        axios.get("http://localhost:5000/getStudentGrades?teacher_id="+this.props.state.currentUser+"&class_name="+classes).then(response => {
+          this.props.setAlumnosInClass(response);
+        });
         this.setState({ state: this.state });
-        
     }
     
     render() {       
@@ -71,7 +74,8 @@ var called_state = 0;
   
   const mapDispatchToProps = {
     setClasses,
-    setCurrentClass
+    setCurrentClass,
+    setAlumnosInClass
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
