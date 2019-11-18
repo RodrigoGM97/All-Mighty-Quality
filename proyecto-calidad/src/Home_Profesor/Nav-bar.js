@@ -6,12 +6,13 @@ import Clase from '../classes/Clase';
 import { connect } from 'react-redux';
 import setClasses from '../Actions/setClasses';
 import axios from 'axios';
+import DropdownItem from 'react-bootstrap/DropdownItem';
 
+var called_state = 0;
  class NavBar extends React.Component {
     clases = [
         new Clase("A01024595", "Arquitectura"),
         new Clase("A01024585", "Programación")];
-
     updateGrade(id)
     {
         console.log(document.getElementById(id).innerHTML);
@@ -26,29 +27,33 @@ import axios from 'axios';
     sleep = (milliseconds) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
-
+    
     render() {
         this.getData(this.props.state.currentUser);
         this.clases = this.props.state.classesArr;
         
+        var makeitem = function(x) { return <Dropdown.Item key = {x.id}>{x.name}</Dropdown.Item>};
+        var arr = this.props.state.classesArr;
         this.sleep(500).then(() => {
             //do stuff
           
-        console.log("hola: %j",this.props.state.classesArr);
-        var arr = this.props.state.classesArr;
-        console.log("Arr: %j",arr[0]);
-        console.log("Length: %j",arr);
-        
+       
+        arr = this.props.state.classesArr;
+      
+        if(called_state == 0)
+        {
+            called_state = 1;
+            this.setState({ state: this.state });
+        }
         })
+        
         return (
             <div>
                 <Navbar bg="light" expand="lg">
                     <img src={Logo} width="50" height="50" />
                     <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
                     <DropdownButton  as={ButtonGroup} title="Groups" id="bg-vertical-dropdown-1" style = {{marginLeft: '15px'}} >
-                    {this.clases.map(clasesArr => (
-                        <Dropdown.Item key={clasesArr.id} id = {clasesArr.id} onClick={() => this.updateGrade(clasesArr.id)} >{clasesArr.name}</Dropdown.Item>
-                    ))}
+                    {arr.map(makeitem)}
                     </DropdownButton>
                     <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/">Sign out</Link>
                 </Navbar>
