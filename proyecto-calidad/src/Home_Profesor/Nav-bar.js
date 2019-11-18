@@ -6,7 +6,8 @@ import Logo from '../Images/LogoTec.png';
  class NavBar extends React.Component {
     updateGrade(id)
     {
-        console.log(document.getElementById(id).innerHTML)
+        console.log(document.getElementById(id).innerHTML);
+        console.log(id);
     }
 
     render() {
