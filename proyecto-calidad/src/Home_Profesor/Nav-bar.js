@@ -21,9 +21,9 @@ import Clase from '../classes/Clase';
                 <Navbar bg="light" expand="lg">
                     <img src={Logo} width="50" height="50" />
                     <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
-                    <DropdownButton as={ButtonGroup} title="Groups" id="bg-vertical-dropdown-1" style = {{marginLeft: '15px'}} >
+                    <DropdownButton  as={ButtonGroup} title="Groups" id="bg-vertical-dropdown-1" style = {{marginLeft: '15px'}} >
                     {this.clases.map(clases => (
-                        <Dropdown.Item id = {clases.id} onClick={() => this.updateGrade(clases.id)} >{clases.name}</Dropdown.Item>
+                        <Dropdown.Item key={clases.id} id = {clases.id} onClick={() => this.updateGrade(clases.id)} >{clases.name}</Dropdown.Item>
                     ))}
                     </DropdownButton>
                     <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/">Sign out</Link>
