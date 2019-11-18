@@ -114,3 +114,16 @@ select
 --Check how many classes does a teacher give:
 
 select teacher_id,count(class_id) from teacher_gives_class group by teacher_id;
+
+--- Bring Student's report card:
+
+select
+T.names  + ' ' + T.lastnames as "Teacher Name",
+class.Class_name as Class,
+student_class.academic_grade as "Academic Grade",
+student_class.teamwork_grade as "Teamwork Grade",
+student_class.communication_grade as "Communication Skills Grade"
+from [dbo].[STUDENT_HAS_CLASS] student_class 
+join [dbo].[CLASS] class on (student_class.class_id = class.class_id)
+join [dbo].[TEACHER_GIVES_CLASS] teacher_class on (teacher_class.class_id = student_class.class_id)
+join [dbo].[TEACHERS] T ON (T.TEACHER_ID = teacher_class.teacher_id)
