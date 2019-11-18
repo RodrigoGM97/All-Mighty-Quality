@@ -75,5 +75,20 @@ def getClassesTeacher():
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
 
+@app.route ( '/getClassesofTeacher', methods=['GET'])
+def getClassesofTeacher():
+    currentTeacher = request.args.get('teacher-id')
+    query = "select Class_name from [dbo].[TEACHER_GIVES_CLASS] teacher_class join [dbo].[CLASS] class on (class.class_id = teacher_class.class_id) where teacher_id = '"+currentTeacher+"';"
+    json_response = []
+    classes = cursor.execute(query)
+    for row in classes:
+        content = {
+            'className':row[0],
+        }
+        json_response.append(content)
+    json_response = jsonify(json_response)
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    return json_response
+
 app.run()
 
