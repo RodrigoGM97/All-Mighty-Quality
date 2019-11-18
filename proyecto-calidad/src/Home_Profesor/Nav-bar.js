@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Logo from '../Images/LogoTec.png';
 import Clase from '../classes/Clase';
 import { connect } from 'react-redux';
+import setClasses from '../Actions/setClasses';
+import axios from 'axios';
 
  class NavBar extends React.Component {
     clases = [
@@ -15,9 +17,14 @@ import { connect } from 'react-redux';
         console.log(document.getElementById(id).innerHTML);
         console.log(id);
     }
+    getData(teacher_id) {
+        axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
+          this.props.setClasses(response);
+        })
+      }
 
     render() {
-        
+        this.getData(this.props.state.currentUser);
         this.clases = this.props.state.classesArr;
         console.log(this.props.state);
         
@@ -46,7 +53,7 @@ import { connect } from 'react-redux';
   }
   
   const mapDispatchToProps = {
-    
+    setClasses
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
