@@ -2,8 +2,13 @@ import React from 'react';
 import {Navbar, ButtonGroup, Dropdown, DropdownButton} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Logo from '../Images/LogoTec.png';
+import Clase from '../classes/Clase';
 
  class NavBar extends React.Component {
+    clases = [
+        new Clase("A01024595", "Arquitectura"),
+        new Clase("A01024585", "Programación")];
+
     updateGrade(id)
     {
         console.log(document.getElementById(id).innerHTML);
@@ -17,9 +22,9 @@ import Logo from '../Images/LogoTec.png';
                     <img src={Logo} width="50" height="50" />
                     <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
                     <DropdownButton as={ButtonGroup} title="Groups" id="bg-vertical-dropdown-1" style = {{marginLeft: '15px'}} >
-                        <Dropdown.Item eventKey="1" id = "1" onClick={() => this.updateGrade("1")} >Architecture</Dropdown.Item>
-                        <Dropdown.Item eventKey="2" id = "2" onClick={() => this.updateGrade("2")}>Programming</Dropdown.Item>
-                        <Dropdown.Item eventKey="3" id = "3" onClick={() => this.updateGrade("3")}>Entrepreneurship</Dropdown.Item>
+                    {this.clases.map(clases => (
+                        <Dropdown.Item id = {clases.id} onClick={() => this.updateGrade(clases.id)} >{clases.name}</Dropdown.Item>
+                    ))}
                     </DropdownButton>
                     <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/">Sign out</Link>
                 </Navbar>
