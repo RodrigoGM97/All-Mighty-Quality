@@ -18,14 +18,14 @@ class tablaAlumnos extends React.Component {
   }
   
   getData(teacher_id) {
-    axios.get("http://localhost:5000/getClassesTeacher?username="+teacher_id).then(response => {
+    axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
       this.props.setClasses(response);
     })
   }
 
   alumnos = [
-    new Alumno("A01024595", "Rodrigo", "Garcia", "mail",[{"class":"Arquitectura", "grade":"10"}, {"class":"Programación", "grade":"7"}]), 
-    new Alumno("A01023607", "Alberto", "Pascal", "mail",[{"class":"Arquitectura", "grade":"9"}, {"class":"Programación", "grade":"8"}])];
+    /*new Alumno("A01024595", "Rodrigo", "Garcia", "mail",[{"class":"Arquitectura", "grade":"10"}, {"class":"Programación", "grade":"7"}]), 
+  new Alumno("A01023607", "Alberto", "Pascal", "mail",[{"class":"Arquitectura", "grade":"9"}, {"class":"Programación", "grade":"8"}])*/];
 
   updateGrade() {
     var payload = [];

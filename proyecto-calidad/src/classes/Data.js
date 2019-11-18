@@ -2,6 +2,7 @@ class Data {
     currentUser = null;
     type_user = null;
     classesArr = [];
+    alumnosinClass = [];
 
     setCurrentUser (user, type) {
         this.currentUser = user;
@@ -9,7 +10,11 @@ class Data {
     }
 
     setClasses(json_response) {
-        console.log("setClasses: %j",json_response);
+        for(var i=0;i<json_response.data.length;i++)
+        {
+            this.classesArr.push(json_response.data[i].className);
+        }
+        
     }
 }
 

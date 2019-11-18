@@ -102,4 +102,28 @@ from students student join student_has_class student_class on (student.student_i
 join class cl on (cl.class_id = student_class.class_id)
 join TEACHER_GIVES_CLASS TEACHER_CLASS ON (CL.CLASS_ID = TEACHER_CLASS.CLASS_ID)
 JOIN TEACHERS T ON (T.TEACHER_ID = TEACHER_CLASS.TEACHER_ID)
-Where T.teacher_id = {replace for teacher id};
+Where T.teacher_id = 'replace for teacher id' and cl.Class_name = 'Replace for class name';
+
+--bring all groups from a given teacher:
+
+select 
+    Class_name
+    from [dbo].[TEACHER_GIVES_CLASS] teacher_class join [dbo].[CLASS] class on (class.class_id = teacher_class.class_id)
+     where teacher_id = 'L01246138';
+
+--Check how many classes does a teacher give:
+
+select teacher_id,count(class_id) from teacher_gives_class group by teacher_id;
+
+--- Bring Student's report card:
+
+select
+T.names  + ' ' + T.lastnames as "Teacher Name",
+class.Class_name as Class,
+student_class.academic_grade as "Academic Grade",
+student_class.teamwork_grade as "Teamwork Grade",
+student_class.communication_grade as "Communication Skills Grade"
+from [dbo].[STUDENT_HAS_CLASS] student_class 
+join [dbo].[CLASS] class on (student_class.class_id = class.class_id)
+join [dbo].[TEACHER_GIVES_CLASS] teacher_class on (teacher_class.class_id = student_class.class_id)
+join [dbo].[TEACHERS] T ON (T.TEACHER_ID = teacher_class.teacher_id)
