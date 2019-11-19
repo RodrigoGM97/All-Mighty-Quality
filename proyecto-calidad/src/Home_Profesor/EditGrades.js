@@ -39,12 +39,10 @@ var called_state = 0;
         this.props.setGrades(grades);
         var json_stringify = JSON.stringify(this.props.state.alumnosinClass);
         console.log(json_stringify);
-        axios.post(
+        axios.get(
           "http://localhost:5000/SET-studentgrade?classid="+this.props.state.currentclassID+"&json="+json_stringify,
           {
-            headers: {
-              'Access-Control-Allow-Origin': '*'
-            }
+           
           });
         console.log("alum%j"+this.props.state.alumnosinClass);
     }

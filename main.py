@@ -48,58 +48,43 @@ def getAllStudents():
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
 
-@app.route('/SET-studentgrade', methods=['POST']) # HTTP request methods namely "GET" or "POST"
+@app.route('/SET-studentgrade', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def setStudentGrade():
-<<<<<<< HEAD
-    
-    json = request.args.get('json')
+   
     cl_id = request.args.get('classid')
+    json = request.args.get('json')
     arr = json.split('},')
     #cursor.execute("select class_id from class where class_name = 'Computing in a Business Environment';")
     #class_ids = cursor.fetchall()
     #print(class_id[0][0])
-    
+    print(cl_id + "********************************************************")
+    print(arr)
     arr2=[]
     for i in range(0,len(arr)):
         clean_str = arr[i].replace('[','')
+        if (i+1) == len(arr):
+            clean_str = clean_str[:-2]
         clean_str = clean_str.replace(']','')
         arr2.append(clean_str + '}')
         print(arr2[i])    
         mydict = ast.literal_eval(arr2[i])
-        academic_grade = 0#mydict['Academic']
-        teamwork_grade = 0#mydict['teamWork']
-        communication_grade =0# mydict['commuSkills']
-        curr_student = mydict['ID']
-        curr_class = mydict['className']
-        print("query to execute: " + "select class_id from class where class_name = '" + curr_class + "';")
-        cursor.execute("select class_id from class where class_name = '" + curr_class + "';")
-        class_ids = cursor.fetchall()
-        print(class_ids)
-
-        cl_id = class_ids[0][0]
-        print("I will do *********************************")
-        print("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + cl_id + "';")
-        cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + cl_id + "';")
+        academic_grade = mydict['Academic']
+        teamwork_grade = mydict['teamWork']
+        communication_grade = mydict['commSkills']
+        if(academic_grade == "" or teamwork_grade =="" or communication_grade ==""):
+            print("este ya valió")
+        else:
+            curr_student = mydict['ID']
+            print("I will do *********************************")
+            print("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + cl_id + "';")
+            cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + cl_id + "';")
     print("my dict is ",mydict['ID'])
-    cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
-    return jsonify({"msg": ""})# str(cursor.rowcount) + " row(s) updated succesfully"})
-=======
-    curr_student = request.args.get('studentid')
-    curr_class = request.args.get('classid')
-    academic_grade = request.args.get('academic')
-    teamwork_grade = request.args.get('teamwork')
-    communication_grade = request.args.get('communication')
-    json = request.get_json('json')
     
-    print ("......................")
-    
-    json_response = jsonify("hola")
-    json_response.headers.add('Access-Control-Allow-Origin', '*')
-    #cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
-    
-    return json_response
->>>>>>> 3c9de828d5404d9b072233dd7fdc3bd9de4e9528
+    header_jsonify = jsonify({"msg":  "Rows succesfully updated"})
+    header_jsonify.headers.add('Access-Control-Allow-Origin', '*')
+    return header_jsonify
 
+    #cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
 @app.route('/GET-allTeachers', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def getAllTeachers():
     cursor.execute("SELECT * FROM Teachers")
