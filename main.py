@@ -50,6 +50,7 @@ def getAllStudents():
 
 @app.route('/SET-studentgrade', methods=['POST']) # HTTP request methods namely "GET" or "POST"
 def setStudentGrade():
+<<<<<<< HEAD
     
     json = request.args.get('json')
     cl_id = request.args.get('classid')
@@ -82,6 +83,22 @@ def setStudentGrade():
     print("my dict is ",mydict['ID'])
     cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
     return jsonify({"msg": ""})# str(cursor.rowcount) + " row(s) updated succesfully"})
+=======
+    curr_student = request.args.get('studentid')
+    curr_class = request.args.get('classid')
+    academic_grade = request.args.get('academic')
+    teamwork_grade = request.args.get('teamwork')
+    communication_grade = request.args.get('communication')
+    json = request.get_json('json')
+    
+    print ("......................")
+    
+    json_response = jsonify("hola")
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    #cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
+    
+    return json_response
+>>>>>>> 3c9de828d5404d9b072233dd7fdc3bd9de4e9528
 
 @app.route('/GET-allTeachers', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def getAllTeachers():

@@ -13,7 +13,8 @@ function rootReducer(state = data, {type, payload}) {
             state.setClasses(payload);
             return state;
         case 'setCurrentClass':
-            state.currentClass = payload;
+            state.currentClass = payload[0];
+            state.currentclassID = payload[1];
             return state;
         case 'setAlumnosInClass':
             state.setAlumnosInClass(payload);

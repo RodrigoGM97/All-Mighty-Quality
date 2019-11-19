@@ -4,6 +4,7 @@ class Data {
     currentUser = null;
     type_user = null;
     currentClass = "Group";
+    currentclassID = null;
     classesArr = [];
     alumnosinClass = [];
 
