@@ -39,7 +39,13 @@ var called_state = 0;
         this.props.setGrades(grades);
         var json_stringify = JSON.stringify(this.props.state.alumnosinClass);
         console.log(json_stringify);
-        axios.post("http://localhost:5000/SET-studentgrade?json="+json_stringify);
+        axios.post(
+          "http://localhost:5000/SET-studentgrade?classid="+this.props.state.currentclassID+"&json="+json_stringify,
+          {
+            headers: {
+              'Access-Control-Allow-Origin': '*'
+            }
+          });
         console.log("alum%j"+this.props.state.alumnosinClass);
     }
     getData(teacher_id) {
@@ -50,9 +56,10 @@ var called_state = 0;
     sleep = (milliseconds) => {
         return new Promise(resolve => setTimeout(resolve, milliseconds))
     }
-    getClass(classes){
-        this.props.setCurrentClass(classes);
-        axios.get("http://localhost:5000/getStudentGrades?teacher_id="+this.props.state.currentUser+"&class_name="+classes).then(response => {
+    getClass(classesname, classesid){
+        var payload = [classesname, classesid];
+        this.props.setCurrentClass(payload);
+        axios.get("http://localhost:5000/getStudentGrades?teacher_id="+this.props.state.currentUser+"&class_name="+classesname).then(response => {
             this.props.setAlumnosInClass(response);
             this.setState({ state: this.state });
         });
@@ -80,7 +87,7 @@ var called_state = 0;
                     <Navbar.Collapse id="basic-navbar-nav">
                     <DropdownButton  as={ButtonGroup} title={this.props.state.currentClass} id="bg-vertical-dropdown-1" style = {{marginLeft: '15px'}} >
                     {this.props.state.classesArr.map(classes => (
-                        <DropdownItem key={classes.id} value={classes.id} onClick={() => this.getClass(classes.name)}>{classes.name}</DropdownItem>
+                        <DropdownItem key={classes.id} value={classes.id} onClick={() => this.getClass(classes.name, classes.id)}>{classes.name}</DropdownItem>
                     ))}
                     </DropdownButton>
                     <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/">Sign out</Link>
