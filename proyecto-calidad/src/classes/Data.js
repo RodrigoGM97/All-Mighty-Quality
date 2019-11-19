@@ -46,6 +46,7 @@ class Data {
             this.alumnosinClass[i].commSkills = grades[i].communication;
 
         }
+        console.log("Datos %j",this.alumnosinClass);
     }
 }
 

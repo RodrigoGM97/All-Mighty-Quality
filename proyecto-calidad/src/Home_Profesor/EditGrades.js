@@ -19,7 +19,7 @@ import setGrades from '../Actions/Grades';
 
 
 var called_state = 0;
- class NavBar extends React.Component {
+ class EditGrades extends React.Component {
     constructor(props) {
         super(props);
         this.getData(this.props.state.currentUser);
@@ -80,42 +80,42 @@ var called_state = 0;
                     <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/">Sign out</Link>
                 </Navbar>
                 <div>
-        <Paper >
-          <Table id="students">
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell >Name</TableCell>
-                <TableCell >Surname</TableCell>
-                <TableCell >Class</TableCell>
-                <TableCell >Academic</TableCell>
-                <TableCell >Team Work</TableCell>
-                <TableCell >Communication Skills</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.props.state.alumnosinClass.map(alumnos => (
-                <TableRow key={alumnos.ID}>
-                  <TableCell component="th" scope="row">{alumnos.ID}</TableCell>
-                  <TableCell >{alumnos.Name}</TableCell>
-                  <TableCell >{alumnos.LastName}</TableCell>
-                  <TableCell >{alumnos.className}</TableCell>
-                  <TableCell >
-                    <input type="number" id={"grade1" + alumnos.ID} min="0" max="100"/>
-                  </TableCell>
-                  <TableCell >
-                    <input type="number" id={"grade2" + alumnos.ID} min="0" max="100"/>
-                  </TableCell>
-                  <TableCell >
-                    <input type="number" id={"grade3" + alumnos.ID} min="0" max="100"/>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
-        <Button className="btn btn-primary" variant="contained" onClick={() => this.updateGrade()}>Submit</Button>
-      </div>
+                  <Paper >
+                    <Table id="students">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>ID</TableCell>
+                          <TableCell >Name</TableCell>
+                          <TableCell >Surname</TableCell>
+                          <TableCell >Class</TableCell>
+                          <TableCell >Academic</TableCell>
+                          <TableCell >Team Work</TableCell>
+                          <TableCell >Communication Skills</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {this.props.state.alumnosinClass.map(alumnos => (
+                          <TableRow key={alumnos.ID}>
+                            <TableCell component="th" scope="row">{alumnos.ID}</TableCell>
+                            <TableCell >{alumnos.Name}</TableCell>
+                            <TableCell >{alumnos.LastName}</TableCell>
+                            <TableCell >{alumnos.className}</TableCell>
+                            <TableCell >
+                              <input type="number" id={"grade1" + alumnos.ID} min="0" max="100"/>
+                            </TableCell>
+                            <TableCell >
+                              <input type="number" id={"grade2" + alumnos.ID} min="0" max="100"/>
+                            </TableCell>
+                            <TableCell >
+                              <input type="number" id={"grade3" + alumnos.ID} min="0" max="100"/>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </Paper>
+                  <Button className="btn btn-primary" style={{justifyContent:'center'}} variant="contained" onClick={() => this.updateGrade()}>Submit</Button>
+                </div>
              </div>
              
         )
@@ -136,4 +136,4 @@ var called_state = 0;
     setGrades
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+  export default connect(mapStateToProps, mapDispatchToProps)(EditGrades);

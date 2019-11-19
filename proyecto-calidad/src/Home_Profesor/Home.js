@@ -1,12 +1,12 @@
 import React from 'react';
-import NavBar from './Nav-bar';
+import EditGrades from './EditGrades';
 
 
 
 function Home() {
   return (
     <div className="App">
-      <NavBar></NavBar>
+      <EditGrades></EditGrades>
       
     </div>
   );
