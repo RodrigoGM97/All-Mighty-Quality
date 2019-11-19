@@ -18,6 +18,9 @@ function rootReducer(state = data, {type, payload}) {
         case 'setAlumnosInClass':
             state.setAlumnosInClass(payload);
             return state;
+        case 'setGrades':
+            state.setGrades(payload);
+            return state;
         default:
             
             return state;
