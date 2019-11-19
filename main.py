@@ -47,16 +47,19 @@ def getAllStudents():
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
 
-@app.route('/SET-studentgrade', methods=['GET']) # HTTP request methods namely "GET" or "POST"
+@app.route('/SET-studentgrade', methods=['POST']) # HTTP request methods namely "GET" or "POST"
 def setStudentGrade():
     curr_student = request.args.get('studentid')
     curr_class = request.args.get('classid')
     academic_grade = request.args.get('academic')
     teamwork_grade = request.args.get('teamwork')
     communication_grade = request.args.get('communication')
+    json = request.args.get_json('json')
     
-    cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
-    return jsonify({"msg": str(cursor.rowcount) + " Row(s) succesfully updated" })
+    print (json)
+    
+    #cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
+    return jsonify(json)
 
 @app.route('/GET-allTeachers', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def getAllTeachers():
