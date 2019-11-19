@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov 18 19:07:48 2019
+
+@author: beto_
+"""
+
 import pyodbc
 import flask
 from flask import jsonify
@@ -40,6 +47,21 @@ def getAllStudents():
     json_response = jsonify(json_response)
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
+
+@app.route('/SET-studentgrade', methods=['GET']) # HTTP request methods namely "GET" or "POST"
+def setStudentGrade():
+    curr_student = request.args.get('studentid')
+    curr_class = request.args.get('classid')
+    academic_grade = request.args.get('academic')
+    teamwork_grade = request.args.get('teamwork')
+    communication_grade = request.args.get('communication')
+    
+    print("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
+    
+    cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = 1, teamwork_grade = 2, communication_grade =3 where student_id = 'A01120369' and class_id = 'MM1516';")
+    #cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
+    
+    return jsonify({"msg": "Row succesfully updated" })
 
 @app.route('/GET-allTeachers', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def getAllTeachers():
