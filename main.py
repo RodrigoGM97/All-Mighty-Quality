@@ -14,9 +14,8 @@ from flask import request
 app = flask.Flask("__main__")
 
 connectString = 'Driver={ODBC Driver 17 for SQL Server};Server=tcp:allmighty.database.windows.net,1433;Database=All_Mighty_DB;Uid=allmighty;Pwd=ArquitecturadeSoftware2019.;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
-connection = pyodbc.connect(connectString)
+connection = pyodbc.connect(connectString, autocommit=True)
 cursor = connection.cursor()
-
 @app.route("/",methods=['GET'])
 def connection():
     response = jsonify(connectString)
@@ -58,9 +57,11 @@ def setStudentGrade():
     
     print("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
     
-    cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = 1, teamwork_grade = 2, communication_grade =3 where student_id = 'A01120369' and class_id = 'MM1516';")
+    cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = 111, teamwork_grade = 12, communication_grade =3 where student_id = 'A01120369' and class_id = 'MM1516';")
     #cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
-    
+    print(cursor.rowcount)
+    #connection.session.commit()
+    #connection.commit()
     return jsonify({"msg": "Row succesfully updated" })
 
 @app.route('/GET-allTeachers', methods=['GET']) # HTTP request methods namely "GET" or "POST"
