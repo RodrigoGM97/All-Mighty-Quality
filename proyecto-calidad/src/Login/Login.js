@@ -39,6 +39,7 @@ class Login extends React.Component {
         payload = [user, "Profesor"];
         this.props.setCurrentUser(payload);
         this.props.history.push('/editGrades');
+        localStorage.setItem('currentUser',payload[0]);
       }  
       else if (this.student) {
         payload = [user, "Alumno"];

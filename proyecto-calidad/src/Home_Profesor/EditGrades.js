@@ -22,7 +22,9 @@ var called_state = 0;
  class EditGrades extends React.Component {
     constructor(props) {
         super(props);
-        this.getData(this.props.state.currentUser);
+        console.log("Current user: "+localStorage.getItem('currentUser'));
+        
+        this.getData(localStorage.getItem('currentUser'));
     }
 
     updateGrade() {
@@ -57,9 +59,10 @@ var called_state = 0;
     getClass(classesname, classesid){
         var payload = [classesname, classesid];
         this.props.setCurrentClass(payload);
-        axios.get("http://localhost:5000/getStudentGrades?teacher_id="+this.props.state.currentUser+"&class_name="+classesname).then(response => {
+        axios.get("http://localhost:5000/getStudentGrades?teacher_id="+localStorage.getItem('currentUser')+"&class_name="+classesname).then(response => {
             this.props.setAlumnosInClass(response);
             this.setState({ state: this.state });
+            console.log("response: %j",response);
         });
         
         
