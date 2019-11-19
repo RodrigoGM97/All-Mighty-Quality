@@ -23,6 +23,7 @@ class Data {
     }
 
     setAlumnosInClass(json_response) {
+        this.alumnosinClass = [];
         for(var i=0;i<json_response.data.length;i++)
         {
             var alumnosInClass = {
@@ -36,7 +37,15 @@ class Data {
             };
             this.alumnosinClass.push(alumnosInClass);
         }
-        console.log("alumnos.class: %j", this.alumnosinClass);
+    }
+
+    setGrades(grades) {
+        for(var i=0;i<grades.length;i++) {
+            this.alumnosinClass[i].Academic = grades[i].academic;
+            this.alumnosinClass[i].teamWork = grades[i].team;
+            this.alumnosinClass[i].commSkills = grades[i].communication;
+
+        }
     }
 }
 

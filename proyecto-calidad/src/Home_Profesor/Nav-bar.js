@@ -8,6 +8,15 @@ import setCurrentClass from '../Actions/setCurrentClass';
 import setAlumnosInClass from '../Actions/setAlumnosInClass';
 import axios from 'axios';
 import DropdownItem from 'react-bootstrap/DropdownItem';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import {Button} from 'react-bootstrap';
+import setGrades from '../Actions/Grades';
+
 
 var called_state = 0;
  class NavBar extends React.Component {
@@ -16,10 +25,18 @@ var called_state = 0;
         this.getData(this.props.state.currentUser);
     }
 
-    updateGrade(id)
-    {
-        console.log(document.getElementById(id).innerHTML);
-        console.log(id);
+    updateGrade() {
+        var ids = [];
+        var grades = [];
+        var temp;
+        var size = document.getElementById("students").rows.length;
+        for(var i =1; i<size; i++)
+        {
+          ids.push(document.getElementById("students").rows[i].cells[0].innerHTML); 
+          temp = {"academic": document.getElementById("grade1"+ids[i-1]).value, "team": document.getElementById("grade2"+ids[i-1]).value, "communication": document.getElementById("grade3"+ids[i-1]).value};
+          grades.push(temp);
+        }
+        this.props.setGrades(grades);
     }
     getData(teacher_id) {
         axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
@@ -32,13 +49,15 @@ var called_state = 0;
     getClass(classes){
         this.props.setCurrentClass(classes);
         axios.get("http://localhost:5000/getStudentGrades?teacher_id="+this.props.state.currentUser+"&class_name="+classes).then(response => {
-          this.props.setAlumnosInClass(response);
+            this.props.setAlumnosInClass(response);
+            this.setState({ state: this.state });
         });
-        this.setState({ state: this.state });
+        
+        
+        
     }
     
     render() {       
-
         this.sleep(500).then(() => {
             if(called_state === 0)
             {
@@ -60,7 +79,45 @@ var called_state = 0;
                     </DropdownButton>
                     <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/">Sign out</Link>
                 </Navbar>
+                <div>
+        <Paper >
+          <Table id="students">
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell >Name</TableCell>
+                <TableCell >Surname</TableCell>
+                <TableCell >Class</TableCell>
+                <TableCell >Academic</TableCell>
+                <TableCell >Team Work</TableCell>
+                <TableCell >Communication Skills</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.props.state.alumnosinClass.map(alumnos => (
+                <TableRow key={alumnos.ID}>
+                  <TableCell component="th" scope="row">{alumnos.ID}</TableCell>
+                  <TableCell >{alumnos.Name}</TableCell>
+                  <TableCell >{alumnos.LastName}</TableCell>
+                  <TableCell >{alumnos.className}</TableCell>
+                  <TableCell >
+                    <input type="number" id={"grade1" + alumnos.ID} min="0" max="100"/>
+                  </TableCell>
+                  <TableCell >
+                    <input type="number" id={"grade2" + alumnos.ID} min="0" max="100"/>
+                  </TableCell>
+                  <TableCell >
+                    <input type="number" id={"grade3" + alumnos.ID} min="0" max="100"/>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+        <Button className="btn btn-primary" variant="contained" onClick={() => this.updateGrade()}>Submit</Button>
+      </div>
              </div>
+             
         )
         
     }
@@ -75,7 +132,8 @@ var called_state = 0;
   const mapDispatchToProps = {
     setClasses,
     setCurrentClass,
-    setAlumnosInClass
+    setAlumnosInClass,
+    setGrades
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

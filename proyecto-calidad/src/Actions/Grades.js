@@ -1,8 +1,8 @@
-const Grades = user => {
+const setGrades = user => {
     return {
-        type: 'Grades',
+        type: 'setGrades',
         payload: user
     };
 };
 
-export default Grades;
+export default setGrades;
