@@ -130,3 +130,9 @@ join [dbo].[TEACHERS] T ON (T.TEACHER_ID = teacher_class.teacher_id)
 
 --bring all classes from a teacher:
 select tc.class_id, cl.class_name from [dbo].[TEACHER_GIVES_CLASS] tc join CLASS cl on (cl.class_id = tc.class_id) where teacher_id = 'L01207355';
+
+--update students' grades:
+
+update [dbo].[STUDENT_HAS_CLASS] 
+set Academic_grade = 10, teamwork_grade = 10, communication_grade = 10 
+where student_id = 'A01120369' and class_id = 'MM1516';
