@@ -37,6 +37,10 @@ var called_state = 0;
           grades.push(temp);
         }
         this.props.setGrades(grades);
+        var json_stringify = JSON.stringify(this.props.state.alumnosinClass);
+        console.log(json_stringify);
+        axios.post("http://localhost:5000/SET-studentgrade?json="+json_stringify);
+        console.log("alum%j"+this.props.state.alumnosinClass);
     }
     getData(teacher_id) {
         axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
