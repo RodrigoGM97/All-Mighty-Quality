@@ -1,5 +1,6 @@
 import React from 'react';
-import editGrades from './Home_Profesor/EditGrades';
+import editGrades from './Home_Profesor/Home';
+import Grades from './Home_Profesor/Home2';
 import Home_Alumno from './Home_Alumno/Home';
 import Login from './Login/Login';
 import { Provider } from 'react-redux';
@@ -15,6 +16,7 @@ function App() {
         <div>
           <Route exact path='/' component={Login} />
           <Route exact path='/editGrades' component={editGrades} />
+          <Route exact path='/Grades' component={Grades} />
           <Route exact path='/Home-Alumno' component={Home_Alumno} />
         </div>
       </BrowserRouter>
