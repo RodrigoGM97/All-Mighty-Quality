@@ -22,6 +22,13 @@ function rootReducer(state = data, {type, payload}) {
         case 'setGrades':
             state.setGrades(payload);
             return state;
+        case 'signOut':
+            var data = new Data();
+            localStorage.clear();
+            state = data;
+            console.log(localStorage.getItem('currentUser'));
+            
+            return state;
         default:
             
             return state;

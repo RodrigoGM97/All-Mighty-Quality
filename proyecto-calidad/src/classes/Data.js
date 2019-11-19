@@ -15,12 +15,13 @@ class Data {
 
     setClasses(json_response) {
         
-        for(var i=0;i<json_response.data.length;i++)
-        {
-            var classes = new Clase(json_response.data[i].className, json_response.data[i].classID);
-            this.classesArr.push(classes);
+        if(this.classesArr.length == 0) {
+            for(var i=0;i<json_response.data.length;i++)
+            {
+                var classes = new Clase(json_response.data[i].className, json_response.data[i].classID);
+                this.classesArr.push(classes);
+            }
         }
-        console.log("Data: %j", this.classesArr);
     }
 
     setAlumnosInClass(json_response) {

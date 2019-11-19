@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar} from 'react-bootstrap';
+import { Navbar, ButtonGroup, DropdownButton, DropdownItem} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Logo from '../Images/LogoTec.png';
 import { connect } from 'react-redux';
@@ -14,52 +14,51 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import setGrades from '../Actions/Grades';
-
+import signOut from '../Actions/signOut';
 
 var called_state = 0;
  class EditGrades extends React.Component {
     constructor(props) {
         super(props);
-        this.getData(this.props.state.currentUser);
+        this.getData(localStorage.getItem('currentUser'));
     }
     getData(teacher_id) {
         axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
           this.props.setClasses(response);
+          this.setState({ state: this.state });
         });
     }
-    sleep = (milliseconds) => {
-        return new Promise(resolve => setTimeout(resolve, milliseconds))
+    
+    getClass(classesname, classesid){
+      var payload = [classesname, classesid];
+      this.props.setCurrentClass(payload);
+      axios.get("http://localhost:5000/getStudentGrades?teacher_id="+localStorage.getItem('currentUser')+"&class_name="+classesname).then(response => {
+          this.props.setAlumnosInClass(response);
+          this.setState({ state: this.state });
+      });
     }
-    getClass(classes){
-        this.props.setCurrentClass(classes);
-        axios.get("http://localhost:5000/getStudentGrades?teacher_id="+this.props.state.currentUser+"&class_name="+classes).then(response => {
-            this.props.setAlumnosInClass(response);
-            this.setState({ state: this.state });
-        });
-        
-        
-        
+
+    signOut() {
+      console.log("hola");
+      this.props.signOut();
     }
     
     render() {       
-        this.sleep(500).then(() => {
-            if(called_state === 0)
-            {
-                called_state = 1;
-                this.setState({ state: this.state });
-            }
-        })
-        
-        
+
         return (
             <div>
                 <Navbar bg="light" expand="lg">
                     <img src={Logo} width="50" height="50" alt="notFound"/>
                     <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
+                    <DropdownButton  as={ButtonGroup} title={this.props.state.currentClass} style = {{marginLeft: '15px'}} >
+                    {this.props.state.classesArr.map(classes => (
+                        <DropdownItem key={classes.id} value={classes.id} onClick={() => this.getClass(classes.name, classes.id)}>{classes.name}</DropdownItem>
+                    ))}
+                    </DropdownButton>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Link className="btn btn-outline-warning" variant="outline-warning" style = {{marginLeft: 'auto'}} to="/editGrades">Edit</Link>
-                    <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: '5px'}} to="/">Sign out</Link>
+                    <Link className="btn btn-outline-success" variant="outline-success" onClick={() => this.signOut()} style = {{marginLeft: '5px'}} to="/">Sign out</Link>
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
@@ -107,7 +106,8 @@ var called_state = 0;
     setClasses,
     setCurrentClass,
     setAlumnosInClass,
-    setGrades
+    setGrades,
+    signOut
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(EditGrades);

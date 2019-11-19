@@ -16,15 +16,14 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {Button} from 'react-bootstrap';
 import setGrades from '../Actions/Grades';
+import signOut from '../Actions/signOut';
 
 
 var called_state = 0;
  class EditGrades extends React.Component {
     constructor(props) {
         super(props);
-        console.log("Current user: "+localStorage.getItem('currentUser'));
-        
-        this.getData(localStorage.getItem('currentUser'));
+        //this.getData(localStorage.getItem('currentUser'));
     }
 
     updateGrade() {
@@ -40,17 +39,17 @@ var called_state = 0;
         }
         this.props.setGrades(grades);
         var json_stringify = JSON.stringify(this.props.state.alumnosinClass);
-        console.log(json_stringify);
+        console.log(this.props.state.currentclassID);
         axios.get(
           "http://localhost:5000/SET-studentgrade?classid="+this.props.state.currentclassID+"&json="+json_stringify,
           {
            
           });
-        console.log("alum%j"+this.props.state.alumnosinClass);
     }
     getData(teacher_id) {
-        axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
+        axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+localStorage.getItem('currentUser')).then(response => {
           this.props.setClasses(response);
+          this.setState({ state: this.state });
         });
     }
     sleep = (milliseconds) => {
@@ -62,36 +61,29 @@ var called_state = 0;
         axios.get("http://localhost:5000/getStudentGrades?teacher_id="+localStorage.getItem('currentUser')+"&class_name="+classesname).then(response => {
             this.props.setAlumnosInClass(response);
             this.setState({ state: this.state });
-            console.log("response: %j",response);
-        });
-        
-        
-        
+        });  
+    }
+
+    signOut() {
+      this.props.signOut();
     }
     
     render() {       
-        this.sleep(500).then(() => {
-            if(called_state === 0)
-            {
-                called_state = 1;
-                this.setState({ state: this.state });
-            }
-        })
-        
+               
         
         return (
             <div>
                 <Navbar bg="light" expand="lg">
                     <img src={Logo} width="50" height="50" alt="notFound"/>
                     <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
                     <DropdownButton  as={ButtonGroup} title={this.props.state.currentClass} id="bg-vertical-dropdown-1" style = {{marginLeft: '15px'}} >
                     {this.props.state.classesArr.map(classes => (
                         <DropdownItem key={classes.id} value={classes.id} onClick={() => this.getClass(classes.name, classes.id)}>{classes.name}</DropdownItem>
                     ))}
                     </DropdownButton>
-                    <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/">Sign out</Link>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                    <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/" onClick={() => this.signOut()}>Sign out</Link>
                     </Navbar.Collapse>
                 </Navbar>
                 <div>
@@ -116,13 +108,13 @@ var called_state = 0;
                             <TableCell >{alumnos.LastName}</TableCell>
                             <TableCell >{alumnos.className}</TableCell>
                             <TableCell >
-                              <input type="number" id={"grade1" + alumnos.ID} min="0" max="100"/>
+                              <input type="number" defaultValue={alumnos.Academic} id={"grade1" + alumnos.ID} min="0" max="100"/>
                             </TableCell>
                             <TableCell >
-                              <input type="number" id={"grade2" + alumnos.ID} min="0" max="100"/>
+                              <input type="number" defaultValue={alumnos.teamWork} id={"grade2" + alumnos.ID} min="0" max="100"/>
                             </TableCell>
                             <TableCell >
-                              <input type="number" id={"grade3" + alumnos.ID} min="0" max="100"/>
+                              <input type="number" defaultValue={alumnos.commSkills} id={"grade3" + alumnos.ID} min="0" max="100"/>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -148,7 +140,8 @@ var called_state = 0;
     setClasses,
     setCurrentClass,
     setAlumnosInClass,
-    setGrades
+    setGrades,
+    signOut
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(EditGrades);
