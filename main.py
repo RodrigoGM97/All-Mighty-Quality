@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Nov 18 19:07:48 2019
+Created on Mon Nov 10 19:07:48 2019
 
-@author: beto_
+@authors: Rodrigo García, Manuel Guadarrama, Alberto Pascal
 """
 
 import pyodbc
@@ -55,14 +55,8 @@ def setStudentGrade():
     teamwork_grade = request.args.get('teamwork')
     communication_grade = request.args.get('communication')
     
-    print("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
-    
-    cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = 111, teamwork_grade = 12, communication_grade =3 where student_id = 'A01120369' and class_id = 'MM1516';")
-    #cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
-    print(cursor.rowcount)
-    #connection.session.commit()
-    #connection.commit()
-    return jsonify({"msg": "Row succesfully updated" })
+    cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
+    return jsonify({"msg": str(cursor.rowcount) + " Row(s) succesfully updated" })
 
 @app.route('/GET-allTeachers', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def getAllTeachers():
