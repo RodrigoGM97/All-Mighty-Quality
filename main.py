@@ -9,6 +9,7 @@ import pyodbc
 import flask
 from flask import jsonify
 from flask import request
+import ast
 
 
 app = flask.Flask("__main__")
@@ -49,17 +50,38 @@ def getAllStudents():
 
 @app.route('/SET-studentgrade', methods=['POST']) # HTTP request methods namely "GET" or "POST"
 def setStudentGrade():
-    curr_student = request.args.get('studentid')
-    curr_class = request.args.get('classid')
-    academic_grade = request.args.get('academic')
-    teamwork_grade = request.args.get('teamwork')
-    communication_grade = request.args.get('communication')
-    json = request.args.get_json('json')
     
-    print (json)
+    json = request.args.get('json')
+    cl_id = request.args.get('classid')
+    arr = json.split('},')
+    #cursor.execute("select class_id from class where class_name = 'Computing in a Business Environment';")
+    #class_ids = cursor.fetchall()
+    #print(class_id[0][0])
     
-    #cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
-    return jsonify(json)
+    arr2=[]
+    for i in range(0,len(arr)):
+        clean_str = arr[i].replace('[','')
+        clean_str = clean_str.replace(']','')
+        arr2.append(clean_str + '}')
+        print(arr2[i])    
+        mydict = ast.literal_eval(arr2[i])
+        academic_grade = 0#mydict['Academic']
+        teamwork_grade = 0#mydict['teamWork']
+        communication_grade =0# mydict['commuSkills']
+        curr_student = mydict['ID']
+        curr_class = mydict['className']
+        print("query to execute: " + "select class_id from class where class_name = '" + curr_class + "';")
+        cursor.execute("select class_id from class where class_name = '" + curr_class + "';")
+        class_ids = cursor.fetchall()
+        print(class_ids)
+
+        cl_id = class_ids[0][0]
+        print("I will do *********************************")
+        print("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + cl_id + "';")
+        cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + cl_id + "';")
+    print("my dict is ",mydict['ID'])
+    cursor.execute("update [dbo].[STUDENT_HAS_CLASS] set Academic_grade = " + academic_grade + ", teamwork_grade = " + teamwork_grade + ", communication_grade =" + communication_grade + " where student_id = '" + curr_student + "' and class_id = '" + curr_class + "';")
+    return jsonify({"msg": ""})# str(cursor.rowcount) + " row(s) updated succesfully"})
 
 @app.route('/GET-allTeachers', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def getAllTeachers():
