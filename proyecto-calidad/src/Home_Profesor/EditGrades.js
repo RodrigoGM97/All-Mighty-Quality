@@ -72,12 +72,15 @@ var called_state = 0;
                 <Navbar bg="light" expand="lg">
                     <img src={Logo} width="50" height="50" alt="notFound"/>
                     <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
                     <DropdownButton  as={ButtonGroup} title={this.props.state.currentClass} id="bg-vertical-dropdown-1" style = {{marginLeft: '15px'}} >
                     {this.props.state.classesArr.map(classes => (
                         <DropdownItem key={classes.id} value={classes.id} onClick={() => this.getClass(classes.name)}>{classes.name}</DropdownItem>
                     ))}
                     </DropdownButton>
                     <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: 'auto'}} to="/">Sign out</Link>
+                    </Navbar.Collapse>
                 </Navbar>
                 <div>
                   <Paper >

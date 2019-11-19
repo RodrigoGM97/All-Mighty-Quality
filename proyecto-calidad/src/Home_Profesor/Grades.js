@@ -56,8 +56,11 @@ var called_state = 0;
                 <Navbar bg="light" expand="lg">
                     <img src={Logo} width="50" height="50" alt="notFound"/>
                     <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
                     <Link className="btn btn-outline-warning" variant="outline-warning" style = {{marginLeft: 'auto'}} to="/editGrades">Edit</Link>
                     <Link className="btn btn-outline-success" variant="outline-success" style = {{marginLeft: '5px'}} to="/">Sign out</Link>
+                    </Navbar.Collapse>
                 </Navbar>
                 <div>
                   <Paper >
