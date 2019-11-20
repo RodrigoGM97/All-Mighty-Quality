@@ -136,3 +136,7 @@ select tc.class_id, cl.class_name from [dbo].[TEACHER_GIVES_CLASS] tc join CLASS
 update [dbo].[STUDENT_HAS_CLASS] 
 set Academic_grade = 10, teamwork_grade = 10, communication_grade = 10 
 where student_id = 'A01120369' and class_id = 'MM1516';
+
+
+--bring student's grades:
+select st_cl.class_id, cl.class_name, st_cl.academic_grade, st_cl.teamwork_grade, st_cl.communication_grade, st_cl.final_grade from [dbo].[STUDENT_HAS_CLASS] st_cl join class cl on (st_cl.class_id = cl.class_id) where st_cl.student_id = 'A01120369';
