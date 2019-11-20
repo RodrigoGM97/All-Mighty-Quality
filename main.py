@@ -35,6 +35,16 @@ def login():
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
 
+@app.route('/welcomeStudent', methods=['GET']) # HTTP request methods namely "GET" or "POST"
+def welcome_student():
+    student_id = request.args.get('student_id')
+    query = "select Names from STUDENTS where student_id = '" + student_id +"';" 
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    json_response = jsonify(rows[0][0])
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    return json_response
+
 @app.route('/GET-allStudents', methods=['GET']) # HTTP request methods namely "GET" or "POST"
 def getAllStudents():
     cursor.execute("SELECT * FROM STUDENTS")
