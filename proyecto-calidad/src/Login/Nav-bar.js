@@ -11,7 +11,7 @@ import Logo from '../Images/LogoTec.png';
             <div>
                 <Navbar bg="light" expand="lg" >
                 <img src={Logo} width="50" height="50" alt="notFound"/>
-                <Navbar.Brand href="#home">International Exchange Portal</Navbar.Brand>
+                <Navbar.Brand>International Exchange Portal</Navbar.Brand>
                     
                 </Navbar>
              </div>

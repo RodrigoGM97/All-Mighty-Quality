@@ -26,8 +26,9 @@ function rootReducer(state = data, {type, payload}) {
             var data = new Data();
             localStorage.clear();
             state = data;
-            console.log(localStorage.getItem('currentUser'));
-            
+            return state;
+        case 'getStudentGrades':
+            state.getStudentGrades(payload);
             return state;
         default:
             

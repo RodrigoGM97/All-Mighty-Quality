@@ -15,8 +15,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import setGrades from '../Actions/Grades';
 import signOut from '../Actions/signOut';
-
-var called_state = 0;
  class EditGrades extends React.Component {
     constructor(props) {
         super(props);
@@ -49,7 +47,7 @@ var called_state = 0;
             <div>
                 <Navbar bg="light" expand="lg">
                     <img src={Logo} width="50" height="50" alt="notFound"/>
-                    <Navbar.Brand href="#home" style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
+                    <Navbar.Brand style = {{marginLeft: '15px'}}>International Exchange Portal</Navbar.Brand>
                     <DropdownButton  as={ButtonGroup} title={this.props.state.currentClass} style = {{marginLeft: '15px'}} >
                     {this.props.state.classesArr.map(classes => (
                         <DropdownItem key={classes.id} value={classes.id} onClick={() => this.getClass(classes.name, classes.id)}>{classes.name}</DropdownItem>

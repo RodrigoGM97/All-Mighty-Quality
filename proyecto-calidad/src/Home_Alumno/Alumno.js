@@ -1,7 +1,4 @@
 import React from 'react';
-import { Navbar, ButtonGroup, DropdownButton, DropdownItem} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import Logo from '../Images/LogoTec.png';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Table from '@material-ui/core/Table';
@@ -11,15 +8,18 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import signOut from '../Actions/signOut';
-
-var called_state = 0;
+import getStudentGrades from '../Actions/getStudentGrades';
  class Alumnos extends React.Component {
     constructor(props) {
         super(props);
-        this.getClasses(localStorage.getItem('currentUser'));
+        this.getStudentGrades(localStorage.getItem('currentUser'));
     }
-    getClasses(student_id) {
-
+    getStudentGrades(student_id) {
+        console.log("ID: "+student_id);
+        axios.get("http://localhost:5000/getStudentReportCard?student_id="+student_id).then(response => {
+            this.props.getStudentGrades(response);
+            this.setState({ state: this.state });
+        });
     }
 
     signOut() {
@@ -35,23 +35,23 @@ var called_state = 0;
                 <Table id="students">
                     <TableHead>
                     <TableRow>
-                        <TableCell>ID</TableCell>
-                        <TableCell >Name</TableCell>
-                        <TableCell >Surname</TableCell>
-                        <TableCell >Academic</TableCell>
-                        <TableCell >Team Work</TableCell>
-                        <TableCell >Communication Skills</TableCell>
+                        <TableCell style={{textAlign:"center"}}>Class ID</TableCell>
+                        <TableCell >Class Name</TableCell>
+                        <TableCell style={{textAlign:"center"}}>Academic</TableCell>
+                        <TableCell style={{textAlign:"center"}}>Team work</TableCell>                        
+                        <TableCell style={{textAlign:"center"}}>Communication Skills</TableCell>
+                        <TableCell style={{textAlign:"center"}}>Final Grade</TableCell>
                     </TableRow>
                     </TableHead>
-                    <TableBody>
-                    {this.props.state.alumnosinClass.map(alumnos => (
-                        <TableRow key={alumnos.ID}>
-                        <TableCell component="th" scope="row">{alumnos.ID}</TableCell>
-                        <TableCell >{alumnos.Name}</TableCell>
-                        <TableCell >{alumnos.LastName}</TableCell>
-                        <TableCell >{alumnos.Academic}</TableCell>
-                        <TableCell >{alumnos.teamWork}</TableCell>
-                        <TableCell >{alumnos.commSkills}</TableCell>
+                    <TableBody >
+                    {this.props.state.classesArr.map(alumnos => (
+                        <TableRow key={alumnos.classID}>
+                        <TableCell style={{textAlign:"center"}}>{alumnos.classID}</TableCell>
+                        <TableCell >{alumnos.className}</TableCell>
+                        <TableCell style={{textAlign:"center"}}>{alumnos.academic}</TableCell>
+                        <TableCell style={{textAlign:"center"}}>{alumnos.teamwork}</TableCell>
+                        <TableCell style={{textAlign:"center"}}>{alumnos.commskills}</TableCell>
+                        <TableCell style={{textAlign:"center"}}>{alumnos.final_grade}</TableCell>                    
                         </TableRow>
                     ))}
                     </TableBody>
@@ -71,10 +71,7 @@ var called_state = 0;
   }
   
   const mapDispatchToProps = {
-    setClasses,
-    setCurrentClass,
-    setAlumnosInClass,
-    setGrades,
+    getStudentGrades,
     signOut
   }
   

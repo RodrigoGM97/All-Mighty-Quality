@@ -15,7 +15,7 @@ class Data {
 
     setClasses(json_response) {
         
-        if(this.classesArr.length == 0) {
+        if(this.classesArr.length === 0) {
             for(var i=0;i<json_response.data.length;i++)
             {
                 var classes = new Clase(json_response.data[i].className, json_response.data[i].classID);
@@ -48,7 +48,20 @@ class Data {
             this.alumnosinClass[i].commSkills = grades[i].communication;
 
         }
-        console.log("Datos %j",this.alumnosinClass);
+    }
+
+    getStudentGrades(json_response) {
+        for(var i=0;i<json_response.data.length;i++) {
+            var classes = {
+                "academic": json_response.data[i].academic,
+                "classID": json_response.data[i].classID,
+                "className": json_response.data[i].className,
+                "commskills": json_response.data[i].commskills,
+                "final_grade": json_response.data[i].final_grade,
+                "teamwork": json_response.data[i].teamwork
+            }
+            this.classesArr.push(classes);
+        }
     }
 }
 
