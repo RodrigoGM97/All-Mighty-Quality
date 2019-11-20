@@ -128,7 +128,7 @@ def getStudentReportCard():
             'academic': row[2],
             'teamwork': row[3],
             'commskills': row[4],
-            'final grade': row[5]
+            'final_grade': row[5]
         }
         json_response.append(content)
     json_response = jsonify(json_response)
