@@ -115,6 +115,27 @@ def getClassesofTeacher():
     json_response.headers.add('Access-Control-Allow-Origin', '*')
     return json_response
 
+@app.route ( '/getStudentReportCard', methods=['GET'])
+def getStudentReportCard():
+    current_student = request.args.get('student_id')
+    query = "select st_cl.class_id, cl.class_name, st_cl.academic_grade, st_cl.teamwork_grade, st_cl.communication_grade, st_cl.final_grade from [dbo].[STUDENT_HAS_CLASS] st_cl join class cl on (st_cl.class_id = cl.class_id) where st_cl.student_id = '" + current_student + "';"
+    json_response = []
+    grades = cursor.execute(query)
+    for row in grades:
+        content = {
+            'classID': row[0],
+            'className':row[1],
+            'academic': row[2],
+            'teamwork': row[3],
+            'commskills': row[4],
+            'final grade': row[5]
+        }
+        json_response.append(content)
+    json_response = jsonify(json_response)
+    print(json_response)
+    json_response.headers.add('Access-Control-Allow-Origin', '*')
+    return json_response
+
 @app.route ( '/getStudentGrades', methods=['GET'])
 def getStudentGrades():
     class_name = request.args.get('class_name')
