@@ -9,10 +9,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import signOut from '../Actions/signOut';
 import getStudentGrades from '../Actions/getStudentGrades';
+var student_name = "";
  class Alumnos extends React.Component {
     constructor(props) {
         super(props);
         this.getStudentGrades(localStorage.getItem('currentUser'));
+        this.setStudentName(localStorage.getItem('currentUser'));
     }
     getStudentGrades(student_id) {
         console.log("ID: "+student_id);
@@ -21,7 +23,14 @@ import getStudentGrades from '../Actions/getStudentGrades';
             this.setState({ state: this.state });
         });
     }
-
+    setStudentName(student_id) {
+        axios.get("http://localhost:5000/welcomeStudent?student_id="+student_id).then(response => {
+            console.log(response.data);
+            student_name = response.data;
+          //this.props.setStudentName(response);
+          this.setState({ state: this.state });
+        });
+    }
     signOut() {
       console.log("hola");
       this.props.signOut();
@@ -30,7 +39,13 @@ import getStudentGrades from '../Actions/getStudentGrades';
     render() {       
 
         return (
+            
             <div>
+                <div>
+                <h2>
+                    Bienvenid@, {student_name}...
+                </h2>
+                </div>
                 <Paper >
                 <Table id="students">
                     <TableHead>
