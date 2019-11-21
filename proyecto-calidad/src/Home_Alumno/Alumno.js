@@ -8,44 +8,36 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import signOut from '../Actions/signOut';
+import { XYPlot, VerticalBarSeries, YAxis, ChartLabel, LabelSeries} from 'react-vis';
 import getStudentGrades from '../Actions/getStudentGrades';
-var student_name = "";
  class Alumnos extends React.Component {
     constructor(props) {
         super(props);
         this.getStudentGrades(localStorage.getItem('currentUser'));
-        this.setStudentName(localStorage.getItem('currentUser'));
     }
+
+    data = [];
+
     getStudentGrades(student_id) {
         console.log("ID: "+student_id);
         axios.get("http://localhost:5000/getStudentReportCard?student_id="+student_id).then(response => {
             this.props.getStudentGrades(response);
+            for(var i=0; i< this.props.state.classesArr.length; i++)
+            {
+              this.data[i] = ({x: i, y: this.props.state.classesArr[i].final_grade, label: this.props.state.classesArr[i].classID, style: {fontSize: 15, textAnchor: 'middle'} }) 
+            }
             this.setState({ state: this.state });
         });
     }
-    setStudentName(student_id) {
-        axios.get("http://localhost:5000/welcomeStudent?student_id="+student_id).then(response => {
-            console.log(response.data);
-            student_name = response.data;
-          //this.props.setStudentName(response);
-          this.setState({ state: this.state });
-        });
-    }
+
     signOut() {
       console.log("hola");
       this.props.signOut();
     }
     
-    render() {       
-
+    render() { 
         return (
-            
             <div>
-                <div>
-                <h2>
-                    Bienvenid@, {student_name}...
-                </h2>
-                </div>
                 <Paper >
                 <Table id="students">
                     <TableHead>
@@ -66,11 +58,27 @@ var student_name = "";
                         <TableCell style={{textAlign:"center"}}>{alumnos.academic}</TableCell>
                         <TableCell style={{textAlign:"center"}}>{alumnos.teamwork}</TableCell>
                         <TableCell style={{textAlign:"center"}}>{alumnos.commskills}</TableCell>
-                        <TableCell style={{textAlign:"center"}}>{alumnos.final_grade}</TableCell>                    
+                        <TableCell style={{textAlign:"center"}} >{alumnos.final_grade}</TableCell>                    
                         </TableRow>
                     ))}
                     </TableBody>
                 </Table>
+                <div style = {{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop:"30px"}} >
+                  <XYPlot height={500} width={500} >
+                    <YAxis />
+                    <VerticalBarSeries data={this.data} />
+                    <LabelSeries data={this.data} />
+                    <ChartLabel
+                      text="Grade"
+                      includeMargin={true}
+                      xPercent={0.026}
+                      yPercent={0.36}
+                      style={{
+                        transform: 'rotate(-90)',
+                        textAnchor: 'end'
+                      }}                      />
+                  </XYPlot>
+                </div>
                 </Paper>
              </div>
              
