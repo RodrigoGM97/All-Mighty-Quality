@@ -15,6 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import setGrades from '../Actions/Grades';
 import signOut from '../Actions/signOut';
+
  class EditGrades extends React.Component {
     constructor(props) {
         super(props);
@@ -37,12 +38,10 @@ import signOut from '../Actions/signOut';
     }
 
     signOut() {
-      console.log("hola");
       this.props.signOut();
     }
     
     render() {       
-
         return (
             <div>
                 <Navbar bg="light" expand="lg">

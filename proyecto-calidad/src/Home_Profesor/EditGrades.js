@@ -20,7 +20,7 @@ import signOut from '../Actions/signOut';
  class EditGrades extends React.Component {
     constructor(props) {
         super(props);
-        //this.getData(localStorage.getItem('currentUser'));
+        this.getData(localStorage.getItem('currentUser'));
     }
 
     updateGrade() {
@@ -37,11 +37,9 @@ import signOut from '../Actions/signOut';
         this.props.setGrades(grades);
         var json_stringify = JSON.stringify(this.props.state.alumnosinClass);
         console.log(this.props.state.currentclassID);
-        axios.get(
-          "http://localhost:5000/SET-studentgrade?classid="+this.props.state.currentclassID+"&json="+json_stringify,
-          {
-           
-          });
+        axios.get("http://localhost:5000/SET-studentgrade?classid="+this.props.state.currentclassID+"&json="+json_stringify).then(response => {
+          console.log(response);
+        });
     }
     getData(teacher_id) {
         axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+localStorage.getItem('currentUser')).then(response => {

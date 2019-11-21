@@ -51,12 +51,14 @@ class Login extends React.Component {
         
       } 
       else {
+        console.log(this.props);
         alert("Incorrect Data");
       }
     });
   }
 
   render () {
+    
     return (
       <div className="Login">
         <NavBar></NavBar>
