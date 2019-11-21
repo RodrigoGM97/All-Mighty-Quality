@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import signOut from '../Actions/signOut';
-import { XYPlot, VerticalBarSeries, YAxis, ChartLabel, LabelSeries} from 'react-vis';
+import { XYPlot, VerticalBarSeries, YAxis, ChartLabel, LabelSeries, HorizontalGridLines} from 'react-vis';
 import getStudentGrades from '../Actions/getStudentGrades';
  class Alumnos extends React.Component {
     constructor(props) {
@@ -19,19 +19,19 @@ import getStudentGrades from '../Actions/getStudentGrades';
     data = [];
 
     getStudentGrades(student_id) {
-        console.log("ID: "+student_id);
         axios.get("http://localhost:5000/getStudentReportCard?student_id="+student_id).then(response => {
             this.props.getStudentGrades(response);
             for(var i=0; i< this.props.state.classesArr.length; i++)
             {
-              this.data[i] = ({x: i, y: this.props.state.classesArr[i].final_grade, label: this.props.state.classesArr[i].classID, style: {fontSize: 15, textAnchor: 'middle'} }) 
+              this.data[i] = ({x: i, y: this.props.state.classesArr[i].final_grade, label: this.props.state.classesArr[i].classID, style: {fontSize: 15, textAnchor:'middle'} }) ;
+
             }
+            
             this.setState({ state: this.state });
         });
     }
 
     signOut() {
-      console.log("hola");
       this.props.signOut();
     }
     
@@ -63,22 +63,23 @@ import getStudentGrades from '../Actions/getStudentGrades';
                     ))}
                     </TableBody>
                 </Table>
-                <div style = {{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop:"30px"}} >
-                  <XYPlot height={500} width={500} >
-                    <YAxis />
-                    <VerticalBarSeries data={this.data} />
-                    <LabelSeries data={this.data} />
-                    <ChartLabel
-                      text="Grade"
-                      includeMargin={true}
-                      xPercent={0.026}
-                      yPercent={0.36}
-                      style={{
-                        transform: 'rotate(-90)',
-                        textAnchor: 'end'
-                      }}                      />
-                  </XYPlot>
-                </div>
+                    <div style = {{padding:'10px', display: 'flex',  justifyContent:'center', alignItems:'center', marginTop:"30px"}} >
+                      <XYPlot height={500} width={500} yDomain={[0, 100]}>
+                        <YAxis />
+                        <VerticalBarSeries data={this.data} style={{stroke: 'blue', fill: 'blue', strokeWidth: 3}}/>
+                        <HorizontalGridLines />
+                        <LabelSeries data={this.data} />
+                        <ChartLabel
+                          text="Grade"
+                          includeMargin={true}
+                          xPercent={0.08}
+                          yPercent={-0.08}
+                          style={{
+                            transform: 'rotate(-90)',
+                            textAnchor: 'end'
+                          }}                      />
+                      </XYPlot>
+                    </div>
                 </Paper>
              </div>
              

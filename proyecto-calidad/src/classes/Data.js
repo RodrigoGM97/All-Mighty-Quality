@@ -51,17 +51,21 @@ class Data {
     }
 
     getStudentGrades(json_response) {
-        for(var i=0;i<json_response.data.length;i++) {
-            var classes = {
-                "academic": json_response.data[i].academic,
-                "classID": json_response.data[i].classID,
-                "className": json_response.data[i].className,
-                "commskills": json_response.data[i].commskills,
-                "final_grade": json_response.data[i].final_grade,
-                "teamwork": json_response.data[i].teamwork
+    
+        if (this.classesArr.length === 0) {
+            for(var i=0;i<json_response.data.length;i++) {
+                var classes = {
+                    "academic": json_response.data[i].academic,
+                    "classID": json_response.data[i].classID,
+                    "className": json_response.data[i].className,
+                    "commskills": json_response.data[i].commskills,
+                    "final_grade": json_response.data[i].final_grade,
+                    "teamwork": json_response.data[i].teamwork
+                }
+                this.classesArr.push(classes);
             }
-            this.classesArr.push(classes);
         }
+        
     }
 }
 
