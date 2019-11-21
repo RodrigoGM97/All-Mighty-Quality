@@ -10,10 +10,12 @@ import Paper from '@material-ui/core/Paper';
 import signOut from '../Actions/signOut';
 import { XYPlot, VerticalBarSeries, YAxis, ChartLabel, LabelSeries, HorizontalGridLines} from 'react-vis';
 import getStudentGrades from '../Actions/getStudentGrades';
+import setStudentName from '../Actions/setStudentName';
  class Alumnos extends React.Component {
     constructor(props) {
         super(props);
         this.getStudentGrades(localStorage.getItem('currentUser'));
+        
     }
 
     data = [];
@@ -28,7 +30,17 @@ import getStudentGrades from '../Actions/getStudentGrades';
             }
             
             this.setState({ state: this.state });
+            this.getStudentName(localStorage.getItem('currentUser'));
         });
+
+    }
+
+    getStudentName(student_id) {
+      axios.get("http://localhost:5000/welcomeStudent?student_id="+student_id).then(response => {
+        localStorage.setItem('studentName', response.data);
+      
+        this.setState({ state: this.state });
+      });
     }
 
     signOut() {
@@ -37,6 +49,10 @@ import getStudentGrades from '../Actions/getStudentGrades';
     
     render() { 
         return (
+          <div>
+            <div>
+              <h1>¡Bienvenido {localStorage.getItem('studentName')}!</h1>
+            </div>            
             <div>
                 <Paper >
                 <Table id="students">
@@ -82,7 +98,7 @@ import getStudentGrades from '../Actions/getStudentGrades';
                     </div>
                 </Paper>
              </div>
-             
+          </div>
         )
         
     }
@@ -96,7 +112,8 @@ import getStudentGrades from '../Actions/getStudentGrades';
   
   const mapDispatchToProps = {
     getStudentGrades,
-    signOut
+    signOut,
+    setStudentName
   }
   
   export default connect(mapStateToProps, mapDispatchToProps)(Alumnos);

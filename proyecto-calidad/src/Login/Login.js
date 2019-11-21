@@ -43,7 +43,6 @@ class Login extends React.Component {
         localStorage.setItem('state',this.props);
       }  
       else if (this.student) {
-        console.log("hola");
         payload = [user, "Alumno"];
         localStorage.setItem('currentUser',payload[0]);
         localStorage.setItem('state',this.props);
