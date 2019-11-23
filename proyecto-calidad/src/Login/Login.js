@@ -29,7 +29,7 @@ class Login extends React.Component {
   
   verifyLogin(user, pass) {
     var payload;
-    axios.get("http://localhost:5000/login?user="+user+"&pass="+pass).then(response => {
+    axios.get("http://arquitectura-api.westus2.azurecontainer.io:5000/login?user="+user+"&pass="+pass).then(response => {
       if(response.data === "Teacher")
         this.professor = true;
       if(response.data === "Student")

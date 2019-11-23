@@ -22,7 +22,7 @@ import signOut from '../Actions/signOut';
         this.getData(localStorage.getItem('currentUser'));
     }
     getData(teacher_id) {
-        axios.get("http://localhost:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
+        axios.get("http://arquitectura-api.westus2.azurecontainer.io:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
           this.props.setClasses(response);
           this.setState({ state: this.state });
         });
@@ -31,7 +31,7 @@ import signOut from '../Actions/signOut';
     getClass(classesname, classesid){
       var payload = [classesname, classesid];
       this.props.setCurrentClass(payload);
-      axios.get("http://localhost:5000/getStudentGrades?teacher_id="+localStorage.getItem('currentUser')+"&class_name="+classesname).then(response => {
+      axios.get("http://arquitectura-api.westus2.azurecontainer.io:5000/getStudentGrades?teacher_id="+localStorage.getItem('currentUser')+"&class_name="+classesname).then(response => {
           this.props.setAlumnosInClass(response);
           this.setState({ state: this.state });
       });

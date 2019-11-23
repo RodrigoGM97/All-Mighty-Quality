@@ -21,7 +21,7 @@ import setStudentName from '../Actions/setStudentName';
     data = [];
 
     getStudentGrades(student_id) {
-        axios.get("http://localhost:5000/getStudentReportCard?student_id="+student_id).then(response => {
+        axios.get("http://arquitectura-api.westus2.azurecontainer.io:5000/getStudentReportCard?student_id="+student_id).then(response => {
             this.props.getStudentGrades(response);
             for(var i=0; i< this.props.state.classesArr.length; i++)
             {
@@ -36,7 +36,7 @@ import setStudentName from '../Actions/setStudentName';
     }
 
     getStudentName(student_id) {
-      axios.get("http://localhost:5000/welcomeStudent?student_id="+student_id).then(response => {
+      axios.get("http://arquitectura-api.westus2.azurecontainer.io:5000/welcomeStudent?student_id="+student_id).then(response => {
         localStorage.setItem('studentName', response.data);
       
         this.setState({ state: this.state });
