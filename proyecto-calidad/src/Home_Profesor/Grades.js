@@ -19,9 +19,11 @@ import signOut from '../Actions/signOut';
  class EditGrades extends React.Component {
     constructor(props) {
         super(props);
+        console.log("USEr: "+localStorage.getItem('currentUser'));
         this.getData(localStorage.getItem('currentUser'));
     }
     getData(teacher_id) {
+      
         axios.get("http://arquitectura-api.westus2.azurecontainer.io:5000/getClassesofTeacher?teacher-id="+teacher_id).then(response => {
           this.props.setClasses(response);
           this.setState({ state: this.state });
@@ -40,8 +42,12 @@ import signOut from '../Actions/signOut';
     signOut() {
       this.props.signOut();
     }
+
+    sleep = (milliseconds) => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
     
-    render() {       
+    render() {     
         return (
             <div>
                 <Navbar bg="light" expand="lg">
