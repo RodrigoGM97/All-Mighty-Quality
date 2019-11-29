@@ -49,8 +49,9 @@ CREATE TABLE STUDENT_HAS_CLASS
 END;
 
 
+
 CREATE TRIGGER GradeUPDATE ON [dbo].[STUDENT_HAS_CLASS]
-AFTER update
+AFTER UPDATE
 AS
 BEGIN
 	UPDATE [dbo].[STUDENT_HAS_CLASS]
@@ -82,9 +83,10 @@ BEGIN
 	WHERE Communication_grade < 0;
 
     UPDATE [dbo].[STUDENT_HAS_CLASS]
-	SET Final_grade = (Academic_grade + Teamwork_grade + Communication_grade)/3
+	SET Final_grade = FLOOR((Academic_grade + Teamwork_grade + Communication_grade)/3)
 	WHERE Final_grade < 0;
 END
+
 
 CREATE TRIGGER GradeINSERT ON [dbo].[STUDENT_HAS_CLASS]
 AFTER INSERT
@@ -119,7 +121,7 @@ BEGIN
 	WHERE Communication_grade < 0;
 
     UPDATE [dbo].[STUDENT_HAS_CLASS]
-	SET Final_grade = (Academic_grade + Teamwork_grade + Communication_grade)/3
+	SET Final_grade = FLOOR((Academic_grade + Teamwork_grade + Communication_grade)/3)
 	WHERE Final_grade < 0;
 END
 
